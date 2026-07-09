@@ -1,7 +1,22 @@
 # Beacon
 
-Beacon is a personal trend radar that detects early signals from technology, research, and developer activity.
+Beacon is an early signal radar.
 
-## Goal
+It does not predict the future.
 
-Do not predict the future. Detect the signals.
+It detects emerging signals from technology,
+research, developers, startups and markets.
+
+## Philosophy
+
+Don't predict the future.
+Detect the signals.
+
+## Roadmap
+
+- [x] Project started
+- [ ] GitHub signal collection
+- [ ] arXiv integration
+- [ ] Beacon Score
+- [ ] AI Analysis
+- [ ] Dashboard
