@@ -20,3 +20,14 @@ Detect the signals.
 - [ ] Beacon Score
 - [ ] AI Analysis
 - [ ] Dashboard
+
+## Development Log
+
+### Day 1 - Project Created
+- Created the Beacon project folder
+- Added `main.py`
+- Added initial `README.md`
+- Pushed the first version to GitHub
+
+### Day 2 - First GitHub Signal
+- Coming soon
