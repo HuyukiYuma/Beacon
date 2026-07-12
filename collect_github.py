@@ -36,9 +36,9 @@ def search_github(query: str, limit: int = 5) -> None:
 
 
 theme_name = "AI Agent"
-first_keyword = THEMES[theme_name][0]
 
 print(f"Theme: {theme_name}")
 print()
 
-search_github(first_keyword)
+for keyword in THEMES[theme_name]:
+    search_github(keyword)
