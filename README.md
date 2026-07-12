@@ -34,3 +34,9 @@ Detect the signals.
 - Connected Beacon to the GitHub API
 - Retrieved live repository data for the first time
 - Confirmed that the initial search query is too broad
+
+### Day 3 - AI Agent Signal Pack
+- Introduced `themes.py` to separate theme configuration from logic
+- Added multiple GitHub search signals for the AI Agent theme
+- Learned how Python loops iterate through keyword lists
+- Confirmed Beacon can search multiple signals for a single concept
