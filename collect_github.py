@@ -1,32 +1,44 @@
 import requests
 
-SEARCH_TOPIC = "agentic ai"
+from themes import THEMES
 
-url = (
-    "https://api.github.com/search/repositories"
-    f"?q={SEARCH_TOPIC}&sort=stars&order=desc&per_page=5"
-)
 
-print(f"Searching GitHub for: {SEARCH_TOPIC}")
-print()
+API_URL = "https://api.github.com/search/repositories"
 
-response = requests.get(url)
 
-if response.status_code == 200:
+def search_github(query: str, limit: int = 5) -> None:
+    params = {
+        "q": query,
+        "sort": "stars",
+        "order": "desc",
+        "per_page": limit,
+    }
+
+    response = requests.get(API_URL, params=params, timeout=10)
+
+    if response.status_code != 200:
+        print("GitHub API Error")
+        print(f"Status code: {response.status_code}")
+        print(response.text)
+        return
 
     data = response.json()
 
-    print(f"Found {data['total_count']} repositories")
+    print(f"Searching GitHub for: {query}")
+    print(f"Found {data['total_count']:,} repositories")
     print()
 
-    for repo in data["items"]:
-
-        print(f"📦 {repo['full_name']}")
-        print(f"⭐ Stars : {repo['stargazers_count']}")
-        print(f"🔗 {repo['html_url']}")
+    for repository in data["items"]:
+        print(f"📦 {repository['full_name']}")
+        print(f"⭐ Stars: {repository['stargazers_count']:,}")
+        print(f"🔗 {repository['html_url']}")
         print()
 
-else:
 
-    print("GitHub API Error")
-    print(response.status_code)
+theme_name = "AI Agent"
+first_keyword = THEMES[theme_name][0]
+
+print(f"Theme: {theme_name}")
+print()
+
+search_github(first_keyword)
