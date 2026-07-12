@@ -30,4 +30,7 @@ Detect the signals.
 - Pushed the first version to GitHub
 
 ### Day 2 - First GitHub Signal
-- Coming soon
+- Installed the `requests` library
+- Connected Beacon to the GitHub API
+- Retrieved live repository data for the first time
+- Confirmed that the initial search query is too broad
