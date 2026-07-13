@@ -14,12 +14,24 @@ Detect the signals.
 
 ## Roadmap
 
-- [x] Project started
-- [ ] GitHub signal collection
-- [ ] arXiv integration
-- [ ] Beacon Score
-- [ ] AI Analysis
-- [ ] Dashboard
+Phase 1  Collect
+================
+✅ GitHub API
+✅ Signal Pack
+✅ Hit Count
+⬜ Ranking
+
+Phase 2  Analyze
+================
+⬜ Beacon Score
+⬜ Historical Data
+⬜ Trend Detection
+
+Phase 3  Intelligence
+================
+⬜ AI Summary
+⬜ Alerts
+⬜ Dashboard
 
 ## Development Log
 
@@ -40,3 +52,28 @@ Detect the signals.
 - Added multiple GitHub search signals for the AI Agent theme
 - Learned how Python loops iterate through keyword lists
 - Confirmed Beacon can search multiple signals for a single concept
+
+### Day 4 - Repository Hit Count
+
+- Introduced the first Beacon scoring concept
+- Counted how many search signals matched each GitHub repository
+- Learned how to use Python dictionaries for data aggregation
+- Learned basic `if/else` logic for counting repeated results
+
+## Current Status
+
+✅ GitHub API connection
+
+✅ Multi-keyword Signal Pack
+
+✅ Repository Hit Count
+
+⬜ Repository Ranking
+
+⬜ Beacon Score
+
+⬜ Database
+
+⬜ AI Analysis
+
+⬜ Dashboard
