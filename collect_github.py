@@ -5,6 +5,7 @@ from themes import THEMES
 
 API_URL = "https://api.github.com/search/repositories"
 
+scores = {}
 
 def search_github(query: str, limit: int = 5) -> None:
     params = {
@@ -29,6 +30,11 @@ def search_github(query: str, limit: int = 5) -> None:
     print()
 
     for repository in data["items"]:
+        if repository["full_name"] in scores:
+            scores[repository["full_name"]] += 1
+        else:
+            scores[repository["full_name"]] = 1
+
         print(f"📦 {repository['full_name']}")
         print(f"⭐ Stars: {repository['stargazers_count']:,}")
         print(f"🔗 {repository['html_url']}")
@@ -36,9 +42,19 @@ def search_github(query: str, limit: int = 5) -> None:
 
 
 theme_name = "AI Agent"
-
 print(f"Theme: {theme_name}")
 print()
 
 for keyword in THEMES[theme_name]:
     search_github(keyword)
+
+print("==========")
+print("Hit Count")
+print("==========")
+
+for repository_name, hit_count in sorted(
+    scores.items(),
+    key=lambda item: item[1],
+    reverse=True,
+):
+    print(repository_name, ":", hit_count)
