@@ -60,6 +60,13 @@ Phase 3  Intelligence
 - Learned how to use Python dictionaries for data aggregation
 - Learned basic `if/else` logic for counting repeated results
 
+### Day 5 - Repository Profiles
+
+- Replaced simple hit counts with structured repository profiles
+- Stored hit count, GitHub stars, and repository URL together
+- Added repository ranking by hit count and star count
+- Learned how nested Python dictionaries manage related information
+
 ## Current Status
 
 ✅ GitHub API connection
