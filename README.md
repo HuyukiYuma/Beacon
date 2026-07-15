@@ -12,6 +12,18 @@ research, developers, startups and markets.
 Don't predict the future.
 Detect the signals.
 
+## Development Philosophy
+
+Beacon is built with an AI-assisted development workflow.
+
+Roles:
+
+- Product Owner: Yuma
+- System Architect: ChatGPT
+- Implementation Engineer: Claude Code
+
+The goal is not only to build Beacon, but also to understand every major design decision throughout its development.
+
 ## Roadmap
 
 Phase 1  Collect
@@ -74,6 +86,14 @@ Phase 3  Intelligence
 - Saved repository rankings with collection timestamps
 - Prepared Beacon for historical trend comparison
 - Learned basic JSON and file handling in Python
+
+### Day 6.5 - Code Refactoring
+
+- Introduced Claude Code into the Beacon development workflow
+- Separated repository ranking from snapshot saving
+- Improved function responsibilities
+- Fixed Windows console compatibility by replacing emoji output
+- Improved overall code readability and maintainability
 
 ## Current Status
 

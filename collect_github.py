@@ -60,14 +60,38 @@ def search_github(query: str, limit: int = 5) -> None:
                 "url": repository["html_url"],
             }
 
-        print(f"📦 {repository_name}")
-        print(f"⭐ Stars: {repository['stargazers_count']:,}")
-        print(f"🔗 {repository['html_url']}")
+        print(f"Repository : {repository_name}")
+        print(f"Stars      : {repository['stargazers_count']:,}")
+        print(f"URL        : {repository['html_url']}")
         print()
 
 
 def display_repository_ranking() -> None:
     """ヒット数が多い順にRepository情報を表示する。"""
+
+    print("=" * 50)
+    print("Beacon Repository Ranking")
+    print("=" * 50)
+
+    sorted_profiles = sorted(
+        repository_profiles.items(),
+        key=lambda item: (
+            item[1]["hits"],
+            item[1]["stars"],
+        ),
+        reverse=True,
+    )
+
+    for rank, (repository_name, profile) in enumerate(
+        sorted_profiles,
+        start=1,
+    ):
+        print(f"{rank}. {repository_name}")
+        print(f"   Hits : {profile['hits']}")
+        print(f"   Stars: {profile['stars']:,}")
+        print(f"   URL  : {profile['url']}")
+        print()
+
 
 def save_snapshot(theme_name: str) -> None:
     """現在のRepository情報をJSONファイルへ保存する。"""
@@ -124,30 +148,6 @@ def save_snapshot(theme_name: str) -> None:
         )
 
     print(f"Snapshot saved: {file_path}")
-
-
-    print("=" * 50)
-    print("Beacon Repository Ranking")
-    print("=" * 50)
-
-    sorted_profiles = sorted(
-        repository_profiles.items(),
-        key=lambda item: (
-            item[1]["hits"],
-            item[1]["stars"],
-        ),
-        reverse=True,
-    )
-
-    for rank, (repository_name, profile) in enumerate(
-        sorted_profiles,
-        start=1,
-    ):
-        print(f"{rank}. {repository_name}")
-        print(f"   Hits : {profile['hits']}")
-        print(f"   Stars: {profile['stars']:,}")
-        print(f"   URL  : {profile['url']}")
-        print()
 
 
 theme_name = "AI Agent"
