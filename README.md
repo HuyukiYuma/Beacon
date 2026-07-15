@@ -67,6 +67,14 @@ Phase 3  Intelligence
 - Added repository ranking by hit count and star count
 - Learned how nested Python dictionaries manage related information
 
+### Day 6 - Daily Snapshot
+
+- Added JSON snapshot storage
+- Created a `data` directory automatically
+- Saved repository rankings with collection timestamps
+- Prepared Beacon for historical trend comparison
+- Learned basic JSON and file handling in Python
+
 ## Current Status
 
 ✅ GitHub API connection
