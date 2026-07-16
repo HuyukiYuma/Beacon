@@ -24,26 +24,60 @@ Roles:
 
 The goal is not only to build Beacon, but also to understand every major design decision throughout its development.
 
+## Development Workflow
+
+Beacon is developed using an AI-assisted workflow.
+
+Roles:
+
+- Product Owner
+- System Architect
+- Implementation Engineer
+
+The goal is not only to build Beacon,
+but to understand every important design decision throughout its development.
+
+## Project Structure
+Beacon/
+│
+├── main.py               # Application entry point
+├── collect_github.py     # GitHub collection and ranking
+├── storage.py            # Snapshot storage
+├── comparison.py         # Snapshot comparison
+├── themes.py             # Search themes
+│
+├── data/                 # Local snapshot storage
+│
+├── README.md
+├── CLAUDE.md
+└── .gitignore
+
+
+
 ## Roadmap
 
-Phase 1  Collect
-================
-✅ GitHub API
-✅ Signal Pack
-✅ Hit Count
-⬜ Ranking
+### Phase 1 - Collect
 
-Phase 2  Analyze
-================
-⬜ Beacon Score
-⬜ Historical Data
-⬜ Trend Detection
+- ✅ GitHub API
+- ✅ Multi-keyword Signal Pack
+- ✅ Repository Profiles
+- ✅ Ranking
+- ✅ Snapshot Storage
 
-Phase 3  Intelligence
-================
-⬜ AI Summary
-⬜ Alerts
-⬜ Dashboard
+### Phase 2 - Analyze
+
+- ✅ Historical Snapshot Comparison
+- ⬜ Growth Ranking
+- ⬜ Beacon Score
+- ⬜ Trend Detection
+- ⬜ AI Summary
+
+### Phase 3 - Intelligence
+
+- ⬜ Multi-source Analysis
+- ⬜ Dashboard
+- ⬜ Notifications
+
 
 ## Development Log
 
@@ -103,6 +137,15 @@ Phase 3  Intelligence
 - Prepared Beacon for trend detection and growth analysis
 - Phase 2 (Analyze) officially started
 
+### Day 8 - Architecture Refactoring
+
+- Separated project responsibilities into dedicated modules
+- Added `storage.py` for snapshot management
+- Added `comparison.py` for historical analysis
+- Moved `main.py` to the official application entry point
+- Improved project structure for future expansion
+- Added `CLAUDE.md` as the AI development guide
+- Improved Git repository hygiene with `.gitignore`
 
 ## Current Status
 
