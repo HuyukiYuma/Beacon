@@ -15,17 +15,13 @@ AI is responsible for interpreting those facts and identifying meaningful signal
 Don't predict the future.
 Detect the signals.
 
-## Development Philosophy
+## Project Philosophy
 
-Beacon is built with an AI-assisted development workflow.
+Beacon is designed to discover weak signals before they become obvious trends.
 
-Roles:
+The project intentionally separates objective signal collection from AI interpretation.
 
-- Product Owner: Yuma
-- System Architect: ChatGPT
-- Implementation Engineer: Claude Code
-
-The goal is not only to build Beacon, but also to understand every major design decision throughout its development.
+Beacon prioritizes evidence over speculation and observation over prediction.
 
 
 
@@ -36,13 +32,31 @@ Beacon/
 ├── collect_github.py     # GitHub collection and ranking
 ├── storage.py            # Snapshot storage
 ├── comparison.py         # Snapshot comparison
+├── signal_extraction.py  # Signal candidate extraction
 ├── themes.py             # Search themes
 │
-├── data/                 # Local snapshot storage
+├── ai_analysis.py        # AI Analysis (Planned - not yet implemented)
+├── report.py             # Beacon Daily Report (Planned - not yet implemented)
+│
+├── data/                 # Local snapshot and signal storage
+│
+├── docs/                 # AI analysis design documents (see Documentation)
 │
 ├── README.md
 ├── CLAUDE.md
 └── .gitignore
+
+
+
+## Documentation
+
+Design documents for the upcoming AI analysis layer are kept in `docs/`.
+These describe the intended design only; the AI analysis layer itself is not yet implemented.
+
+- `Beacon_Analysis_Protocol.md` - Rules the AI analysis layer must follow: what it can and cannot claim, required evidence structure, and forbidden statements.
+- `Beacon_Prompt.md` - Draft system/user prompt that applies the Protocol.
+- `Daily_Report_Template.md` - Markdown structure the AI's output is expected to follow.
+- `Architecture.md` - How the planned AI analysis layer connects to the existing collection and signal extraction pipeline.
 
 
 
@@ -58,12 +72,13 @@ Beacon/
 
 Phase 2 - Analyze
 
-✅ Historical Snapshot Comparison
-✅ Signal Extraction
-⬜ AI Analysis
-⬜ Daily Beacon Report
-⬜ Multi-source Correlation
-⬜ Trend Detection
+ - ✅ Historical Snapshot Comparison
+ - ✅ Signal Extraction
+ - ✅ AI Analysis Design
+ - ⬜ AI Analysis Implementation
+ - ⬜ Daily Beacon Report
+ - ⬜ Multi-source Correlation
+ - ⬜ Trend Detection
 
 ### Phase 3 - Intelligence
 
