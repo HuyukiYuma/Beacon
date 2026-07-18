@@ -1,11 +1,14 @@
-# Beacon
+## Beacon Vision
 
-Beacon is an early signal radar.
+Beacon is not a GitHub trend tracker.
 
-It does not predict the future.
+Beacon is a signal detection engine.
 
-It detects emerging signals from technology,
-research, developers, startups and markets.
+Its purpose is to discover weak signals before they become obvious trends by collecting, comparing, and analyzing multiple independent sources.
+
+Python is responsible for collecting and organizing objective facts.
+
+AI is responsible for interpreting those facts and identifying meaningful signals.
 
 ## Philosophy
 
@@ -24,18 +27,7 @@ Roles:
 
 The goal is not only to build Beacon, but also to understand every major design decision throughout its development.
 
-## Development Workflow
 
-Beacon is developed using an AI-assisted workflow.
-
-Roles:
-
-- Product Owner
-- System Architect
-- Implementation Engineer
-
-The goal is not only to build Beacon,
-but to understand every important design decision throughout its development.
 
 ## Project Structure
 Beacon/
@@ -64,13 +56,14 @@ Beacon/
 - ✅ Ranking
 - ✅ Snapshot Storage
 
-### Phase 2 - Analyze
+Phase 2 - Analyze
 
-- ✅ Historical Snapshot Comparison
-- ⬜ Growth Ranking
-- ⬜ Beacon Score
-- ⬜ Trend Detection
-- ⬜ AI Summary
+✅ Historical Snapshot Comparison
+✅ Signal Extraction
+⬜ AI Analysis
+⬜ Daily Beacon Report
+⬜ Multi-source Correlation
+⬜ Trend Detection
 
 ### Phase 3 - Intelligence
 
@@ -146,6 +139,15 @@ Beacon/
 - Improved project structure for future expansion
 - Added `CLAUDE.md` as the AI development guide
 - Improved Git repository hygiene with `.gitignore`
+
+### Day 9 - Signal Extraction Foundation
+
+- Added signal_extraction.py
+- Added objective repository difference generation
+- Added rule-based signal candidate extraction
+- Added Signal JSON storage
+- Preserved existing collection and comparison workflow
+- Verified generated data is excluded from Git
 
 ## Current Status
 

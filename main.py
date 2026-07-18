@@ -2,6 +2,7 @@ from themes import THEMES
 
 import collect_github
 import comparison
+import signal_extraction
 import storage
 
 
@@ -18,3 +19,5 @@ collect_github.display_repository_ranking()
 storage.save_snapshot(theme_name, collect_github.repository_profiles)
 
 comparison.display_snapshot_comparison(theme_name)
+
+signal_extraction.extract_and_save_signals(theme_name)

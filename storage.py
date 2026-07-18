@@ -57,6 +57,26 @@ def save_snapshot(theme_name: str, repository_profiles: dict) -> Path:
     return file_path
 
 
+def save_signal_candidates(theme_name: str, signal_data: dict) -> Path:
+    """Signal Extractionの結果をJSONファイルへ保存し、保存先のパスを返す。"""
+
+    signals_directory = Path("data") / "signals"
+    signals_directory.mkdir(parents=True, exist_ok=True)
+
+    collected_at = datetime.now()
+    safe_theme_name = _safe_theme_name(theme_name)
+    timestamp = collected_at.strftime("%Y-%m-%d_%H%M%S")
+
+    file_path = signals_directory / f"signals_{safe_theme_name}_{timestamp}.json"
+
+    with file_path.open("w", encoding="utf-8") as file:
+        json.dump(signal_data, file, ensure_ascii=False, indent=2)
+
+    print(f"Signal candidates saved: {file_path}")
+
+    return file_path
+
+
 def find_snapshot_files(theme_name: str) -> list[Path]:
     """保存済みスナップショットを、古い順に並べて返す。"""
 

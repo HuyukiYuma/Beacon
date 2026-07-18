@@ -18,3 +18,4 @@ Desktop.ini
 
 # Generated snapshots
 data/*.json
+data/signals/*.json
