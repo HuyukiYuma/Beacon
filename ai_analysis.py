@@ -1,8 +1,11 @@
+import importlib
 import json
+import os
 from pathlib import Path
 
 
 PROMPT_FILE_PATH = Path("docs") / "Beacon_Prompt.md"
+ENV_FILE_PATH = Path(".env")
 
 REQUIRED_SIGNAL_KEYS = ("theme", "period", "candidates")
 
@@ -65,15 +68,56 @@ def _build_user_prompt(user_prompt_template: str, signal_json: dict) -> str:
     return user_prompt_template.replace(USER_PROMPT_PLACEHOLDER, signal_json_text)
 
 
-def _call_provider(system_prompt: str, user_prompt: str) -> str:
-    """AIプロバイダーへプロンプトを送信し、生成された文章を受け取る（未実装）。
+def _load_env_file() -> None:
+    """.envファイルを読み込み、まだ設定されていない環境変数として反映する。"""
 
-    OpenAI・Claude・Gemini・ローカルLLMなど、特定プロバイダーへの接続処理は
-    将来この関数の中だけに実装する。generate_report()はこの関数の
-    シグネチャ（system_prompt, user_prompt -> str）にのみ依存する。
+    if not ENV_FILE_PATH.exists():
+        return
+
+    for line in ENV_FILE_PATH.read_text(encoding="utf-8").splitlines():
+        stripped_line = line.strip()
+
+        if not stripped_line or stripped_line.startswith("#") or "=" not in stripped_line:
+            continue
+
+        key, _, value = stripped_line.partition("=")
+        os.environ.setdefault(key.strip(), value.strip())
+
+
+def _load_provider_module(provider_name: str):
+    """AI_PROVIDERに対応する、providers配下のモジュールを読み込む。"""
+
+    try:
+        return importlib.import_module(f"providers.{provider_name}")
+    except ModuleNotFoundError as error:
+        raise ValueError(
+            f"未対応のAIプロバイダーです: '{provider_name}'。"
+            f"providers/{provider_name}.py を追加してください。"
+        ) from error
+
+
+def _call_provider(system_prompt: str, user_prompt: str) -> str:
+    """設定されたAIプロバイダーへプロンプトを送信し、生成された文章を受け取る。
+
+    プロバイダー固有の処理は`providers/`配下の各モジュールが持つ。
+    ここではAI_PROVIDER/AI_MODELの設定に基づいてモジュールを読み込み、
+    呼び出すだけであり、特定プロバイダーのSDKには依存しない。
     """
 
-    raise NotImplementedError("AIプロバイダーへの接続はまだ実装されていません。")
+    _load_env_file()
+
+    provider_name = os.environ.get("AI_PROVIDER")
+    model_name = os.environ.get("AI_MODEL")
+
+    if not provider_name:
+        raise ValueError("AI_PROVIDERが設定されていません。.envを確認してください。")
+
+    if not model_name:
+        raise ValueError("AI_MODELが設定されていません。.envを確認してください。")
+
+    provider_module = _load_provider_module(provider_name)
+
+    return provider_module.generate(system_prompt, user_prompt, model_name)
 
 
 def generate_report(signal_json: dict) -> str:
