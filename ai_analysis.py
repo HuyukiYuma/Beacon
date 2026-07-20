@@ -6,6 +6,7 @@ from pathlib import Path
 
 PROMPT_FILE_PATH = Path("docs") / "Beacon_Prompt.md"
 ENV_FILE_PATH = Path(".env")
+PROVIDERS_DIRECTORY = Path("providers")
 
 REQUIRED_SIGNAL_KEYS = ("theme", "period", "candidates")
 
@@ -84,15 +85,33 @@ def _load_env_file() -> None:
         os.environ.setdefault(key.strip(), value.strip())
 
 
+def _list_available_providers() -> list[str]:
+    """providers配下に実装されている、利用可能なプロバイダー名の一覧を返す。"""
+
+    return sorted(
+        path.stem
+        for path in PROVIDERS_DIRECTORY.glob("*.py")
+        if path.stem != "__init__"
+    )
+
+
 def _load_provider_module(provider_name: str):
     """AI_PROVIDERに対応する、providers配下のモジュールを読み込む。"""
 
+    module_name = f"providers.{provider_name}"
+
     try:
-        return importlib.import_module(f"providers.{provider_name}")
+        return importlib.import_module(module_name)
     except ModuleNotFoundError as error:
+        # providers.<name>自体が存在しない場合のみ、分かりやすいエラーに変換する。
+        # provider内部の依存モジュール不足によるModuleNotFoundErrorはそのまま伝える。
+        if error.name != module_name:
+            raise
+
+        available_providers = ", ".join(_list_available_providers())
         raise ValueError(
             f"未対応のAIプロバイダーです: '{provider_name}'。"
-            f"providers/{provider_name}.py を追加してください。"
+            f"利用可能なプロバイダー: {available_providers}"
         ) from error
 
 
