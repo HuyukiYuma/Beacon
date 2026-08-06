@@ -1,4 +1,21 @@
+from datetime import datetime
+
 from storage import find_snapshot_files, load_snapshot
+
+
+def calculate_elapsed_hours(previous_snapshot: dict, latest_snapshot: dict) -> dict:
+    """2つのSnapshot間の経過時間（秒・時間）を計算する。"""
+
+    previous_time = datetime.fromisoformat(previous_snapshot["collected_at"])
+    latest_time = datetime.fromisoformat(latest_snapshot["collected_at"])
+
+    elapsed_seconds = (latest_time - previous_time).total_seconds()
+    elapsed_hours = elapsed_seconds / 3600
+
+    return {
+        "elapsed_seconds": elapsed_seconds,
+        "elapsed_hours": elapsed_hours,
+    }
 
 
 def compare_snapshots(previous_snapshot: dict, latest_snapshot: dict) -> dict:

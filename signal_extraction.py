@@ -1,3 +1,4 @@
+from comparison import calculate_elapsed_hours
 from storage import find_snapshot_files, load_snapshot, save_signal_candidates
 
 
@@ -81,7 +82,16 @@ def _select_top_star_growth_names(diffs: list[dict]) -> set[str]:
     return {diff["name"] for diff in top_diffs}
 
 
-def select_candidates(diffs: list[dict]) -> list[dict]:
+def _calculate_star_growth_per_hour(star_growth: int, elapsed_hours: float) -> float:
+    """1時間あたりのStar増加数を計算する。経過時間が0の場合は0を返す。"""
+
+    if elapsed_hours == 0:
+        return 0
+
+    return star_growth / elapsed_hours
+
+
+def select_candidates(diffs: list[dict], elapsed_hours: float) -> list[dict]:
     """客観的な差分情報から、注目候補となるRepositoryを抽出する。
 
     複数の条件に該当した場合もRepositoryは重複させず、
@@ -124,6 +134,9 @@ def select_candidates(diffs: list[dict]) -> list[dict]:
                 "current_hits": diff["current_hits"],
                 "hit_change": diff["hit_change"],
                 "is_new": diff["is_new"],
+                "star_growth_per_hour": _calculate_star_growth_per_hour(
+                    diff["star_growth"], elapsed_hours
+                ),
                 "selection_reasons": selection_reasons,
             }
         )
@@ -139,13 +152,16 @@ def build_signal_candidates(
     """前回と最新のSnapshotから、Signal Extractionの結果をまとめる。"""
 
     diffs = build_repository_diffs(previous_snapshot, latest_snapshot)
-    candidates = select_candidates(diffs)
+    elapsed_time = calculate_elapsed_hours(previous_snapshot, latest_snapshot)
+    candidates = select_candidates(diffs, elapsed_time["elapsed_hours"])
 
     return {
         "theme": theme_name,
         "period": {
             "previous": previous_snapshot["collected_at"],
             "current": latest_snapshot["collected_at"],
+            "elapsed_seconds": elapsed_time["elapsed_seconds"],
+            "elapsed_hours": elapsed_time["elapsed_hours"],
         },
         "candidates": candidates,
     }

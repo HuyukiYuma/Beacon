@@ -4,7 +4,8 @@ import os
 API_KEY_ENV_VAR = "ANTHROPIC_API_KEY"
 
 # 料金事故を避けるため、出力トークン数の上限を固定する
-MAX_TOKENS = 1200
+# （Daily Reportが途中で切れないよう、最後まで生成できる値にしている）
+MAX_TOKENS = 2500
 
 
 def generate(system_prompt: str, user_prompt: str, model: str) -> str:
@@ -59,6 +60,13 @@ def generate(system_prompt: str, user_prompt: str, model: str) -> str:
         raise RuntimeError(
             "Anthropic APIとの通信に失敗しました。ネットワーク接続を確認してください。"
         ) from error
+
+    print(f"Stop reason  : {response.stop_reason}")
+
+    if response.stop_reason == "max_tokens":
+        print(
+            "Warning: MAX_TOKENSに達したため、出力が途中で終了している可能性があります。"
+        )
 
     text_blocks = [block.text for block in response.content if block.type == "text"]
 
