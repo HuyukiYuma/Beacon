@@ -174,6 +174,15 @@ Phase 2 - Analyze
 - Received the expected response: `Beacon API Connected`
 - Confirmed the existing provider implementation works without further code changes
 
+### Day 17 - Beacon Dashboard Foundation
+
+- Added Next.js dashboard
+- Added server-only data access layer
+- Displayed real Signal and Snapshot data
+- Added Today's Signals, Top Signals, Recent Activity, and Daily Report empty state
+- Preserved Python backend behavior
+- Kept API keys and `.env` isolated from the UI
+
 ## Current Status
 
 ✅ GitHub API connection
