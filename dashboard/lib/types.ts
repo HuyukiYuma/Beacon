@@ -72,8 +72,15 @@ export type SnapshotSummary = {
   repositoryCount: number;
 };
 
-/** report.py が保存するDaily Report(Markdown)1件分 */
+/**
+ * report.py が保存するDaily Report(Markdown)1件分。
+ *
+ * generatedAtはファイル名のタイムスタンプから取り出した生成日時。
+ * ファイル名が想定の形式でなかった場合はnullになる。
+ */
 export type DailyReport = {
   fileName: string;
+  theme: string;
+  generatedAt: string | null;
   content: string;
 };

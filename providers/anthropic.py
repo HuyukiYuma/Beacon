@@ -5,7 +5,15 @@ API_KEY_ENV_VAR = "ANTHROPIC_API_KEY"
 
 # 料金事故を避けるため、出力トークン数の上限を固定する
 # （Daily Reportが途中で切れないよう、最後まで生成できる値にしている）
-MAX_TOKENS = 2500
+#
+# この値は「上限」であって「目標」ではない。
+# 実際に生成された分だけが課金対象なので、上げてもコストは増えない。
+#
+# 新しいモデルではthinking（内部推論）が既定で有効になり、
+# max_tokensはthinkingと本文の合計に対する上限として働く。
+# 候補が10件を超えるとテンプレート構成の本文だけで2,000トークンを超えるため、
+# thinkingの分を含めた余裕を確保している。
+MAX_TOKENS = 8000
 
 
 def generate(system_prompt: str, user_prompt: str, model: str) -> str:

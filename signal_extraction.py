@@ -167,8 +167,13 @@ def build_signal_candidates(
     }
 
 
-def extract_and_save_signals(theme_name: str) -> None:
-    """直近2つのSnapshotからSignal Extractionを行い、結果をJSONへ保存する。"""
+def extract_and_save_signals(theme_name: str) -> dict | None:
+    """直近2つのSnapshotからSignal Extractionを行い、結果をJSONへ保存する。
+
+    保存したSignalデータを返す。後続のAI分析がディスクを読み直さずに
+    そのまま利用できるようにするため。
+    Snapshotが2件未満でSignalを作れなかった場合はNoneを返す。
+    """
 
     print("=" * 50)
     print("Beacon Signal Extraction")
@@ -179,7 +184,7 @@ def extract_and_save_signals(theme_name: str) -> None:
     if len(snapshot_files) < 2:
         print("Signal Extractionには2件以上のSnapshotが必要です。")
         print()
-        return
+        return None
 
     previous_file, latest_file = snapshot_files[-2], snapshot_files[-1]
 
@@ -192,3 +197,5 @@ def extract_and_save_signals(theme_name: str) -> None:
 
     print(f"Candidates found: {len(signal_data['candidates'])}")
     print()
+
+    return signal_data

@@ -396,11 +396,164 @@ a:hover {
 
 /* ---------- Daily Report ---------- */
 
-.report-body {
-  margin: 0;
-  white-space: pre-wrap;
-  word-break: break-word;
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+.report-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--gridline);
+}
+
+.report-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.report-meta-label {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.report-meta-value {
   font-size: 13px;
   color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+  word-break: break-all;
+}
+
+/*
+ * AIが生成したMarkdownの表示。
+ * 要素セレクタで指定するのは、react-markdownが出力するタグに
+ * クラス名を付けられないため。.report-body配下に限定している。
+ */
+.report-body {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+.report-body h1 {
+  margin: 0 0 16px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.report-body h2 {
+  margin: 28px 0 12px;
+  padding-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--gridline);
+}
+
+.report-body h3 {
+  margin: 20px 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  word-break: break-all;
+}
+
+.report-body h4 {
+  margin: 16px 0 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.report-body p {
+  margin: 0 0 12px;
+}
+
+.report-body ul,
+.report-body ol {
+  margin: 0 0 12px;
+  padding-left: 20px;
+}
+
+.report-body li {
+  margin-bottom: 4px;
+}
+
+.report-body li::marker {
+  color: var(--text-muted);
+}
+
+.report-body strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.report-body a {
+  word-break: break-all;
+}
+
+.report-body code {
+  font-family: ui-monospace, "Cascadia Code", "Consolas", monospace;
+  font-size: 12px;
+  color: var(--text-primary);
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1px 5px;
+}
+
+.report-body pre {
+  overflow-x: auto;
+  padding: 12px;
+  background: var(--page);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.report-body pre code {
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.report-body blockquote {
+  margin: 0 0 12px;
+  padding-left: 12px;
+  border-left: 2px solid var(--gridline);
+  color: var(--text-muted);
+}
+
+.report-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.report-body th,
+.report-body td {
+  text-align: left;
+  padding: 6px 10px 6px 0;
+  border-bottom: 1px solid var(--gridline);
+}
+
+.report-body th {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.report-body hr {
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid var(--gridline);
+}
+
+.report-body > *:last-child {
+  margin-bottom: 0;
 }

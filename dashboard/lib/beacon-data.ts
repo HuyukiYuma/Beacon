@@ -95,6 +95,26 @@ async function readJsonFile<T>(filePath: string): Promise<T> {
 }
 
 /**
+ * ファイル名の末尾にあるタイムスタンプから、生成日時を取り出す。
+ *
+ * 例: "report_AI_Agent_2026-08-16_191234.md" -> "2026-08-16 19:12:34"
+ *
+ * Python側が付けた時刻をそのまま読むだけで、タイムゾーン変換は行わない。
+ * 想定の形式でなければnullを返し、エラーにはしない。
+ */
+function extractTimestampFromFileName(fileName: string): string | null {
+  const matched = fileName.match(/_(\d{4}-\d{2}-\d{2})_(\d{2})(\d{2})(\d{2})\./);
+
+  if (!matched) {
+    return null;
+  }
+
+  const [, date, hour, minute, second] = matched;
+
+  return `${date} ${hour}:${minute}:${second}`;
+}
+
+/**
  * 最新のSignal JSONを読み込む。
  *
  * まだSignalが1件も無い場合はnullを返します(エラーにはしません)。
@@ -191,5 +211,11 @@ export async function getLatestReport(
     "utf-8",
   );
 
-  return { fileName: latestFileName, content };
+  return {
+    fileName: latestFileName,
+    // ファイル名からテーマ名を復元すると曖昧になるため、引数の値をそのまま使う
+    theme,
+    generatedAt: extractTimestampFromFileName(latestFileName),
+    content,
+  };
 }
