@@ -1,0 +1,406 @@
+/*
+ * Beacon Dashboard のダークテーマ。
+ *
+ * 色は役割(role)ごとにCSS変数で定義しています。
+ * 後で色を変えたくなったとき、この1か所を直すだけで済むようにするためです。
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* 面 */
+  --page: #0d0d0d;
+  --surface: #1a1a19;
+  --surface-raised: #232322;
+
+  /* 線 */
+  --border: rgba(255, 255, 255, 0.1);
+  --gridline: #2c2c2a;
+
+  /* 文字 */
+  --text-primary: #ffffff;
+  --text-secondary: #c3c2b7;
+  --text-muted: #898781;
+
+  /* データを表す色。検証済みの2色だけを使う。 */
+  --accent: #3987e5; /* 新規・強調 */
+  --good: #0ca30c; /* 増加 */
+
+  /* 余白 */
+  --gap: 16px;
+  --panel-padding: 20px;
+
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--page);
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- レイアウト ---------- */
+
+.dashboard {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Top Signals(広い)とRecent Activity(狭い)を横並びにする */
+.dashboard-columns {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--gap);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .dashboard-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- パネル ---------- */
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: var(--panel-padding);
+}
+
+.panel-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.panel-subtitle {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.panel-header {
+  margin-bottom: 16px;
+}
+
+/* ---------- ヘッダー ---------- */
+
+.beacon-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--gap);
+  flex-wrap: wrap;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--gridline);
+}
+
+.beacon-wordmark {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 灯台の光を表す小さな点 */
+.beacon-mark {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(57, 135, 229, 0.18);
+  flex-shrink: 0;
+}
+
+.beacon-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
+.beacon-tagline {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.beacon-meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.beacon-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.beacon-meta-label {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.beacon-meta-value {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.theme-chip {
+  display: inline-block;
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 13px;
+  color: var(--text-primary);
+  background: var(--surface-raised);
+}
+
+/* ---------- Stat tile (KPI row) ---------- */
+
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+}
+
+@media (max-width: 900px) {
+  .stat-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.stat-tile {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.stat-value {
+  margin-top: 6px;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+.stat-unit {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-left: 4px;
+}
+
+.stat-note {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ---------- テーブル ---------- */
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.data-table th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 0 10px 8px 0;
+  border-bottom: 1px solid var(--gridline);
+  white-space: nowrap;
+}
+
+.data-table td {
+  padding: 10px 10px 10px 0;
+  border-bottom: 1px solid var(--gridline);
+  color: var(--text-secondary);
+  vertical-align: top;
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.numeric {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.repository-name {
+  color: var(--text-primary);
+  font-weight: 500;
+  word-break: break-all;
+}
+
+/*
+ * `.data-table td`が色を指定しているため、
+ * それより詳細度を高くしないと増加の色が反映されません。
+ */
+.data-table td.growth-positive {
+  color: var(--good);
+  font-weight: 600;
+}
+
+/* ---------- バッジ ---------- */
+
+/*
+ * 候補に選ばれた理由のバッジ。
+ * 理由の識別は色ではなく文字で行うため、色は付けません。
+ * 例外として「新規」だけはaccentで強調します。
+ */
+.badge-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 11px;
+  color: var(--text-muted);
+  background: var(--surface-raised);
+  white-space: nowrap;
+}
+
+.badge-new {
+  border-color: rgba(57, 135, 229, 0.5);
+  color: var(--accent);
+  background: rgba(57, 135, 229, 0.12);
+}
+
+/* ---------- Recent Activity ---------- */
+
+.activity-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.activity-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--gridline);
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-time {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.activity-count {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.latest-tag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  border: 1px solid rgba(57, 135, 229, 0.5);
+  background: rgba(57, 135, 229, 0.12);
+}
+
+/* ---------- 空状態 ---------- */
+
+.empty-state {
+  border: 1px dashed var(--gridline);
+  border-radius: 6px;
+  padding: 24px 20px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.empty-state-title {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin: 0 0 6px;
+}
+
+.empty-state-detail {
+  margin: 0;
+  font-size: 12px;
+}
+
+.code-path {
+  font-family: ui-monospace, "Cascadia Code", "Consolas", monospace;
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1px 5px;
+}
+
+/* ---------- Daily Report ---------- */
+
+.report-body {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
