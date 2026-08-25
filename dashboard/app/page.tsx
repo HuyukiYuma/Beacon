@@ -1,3 +1,4 @@
+import AllCandidates from "@/components/AllCandidates";
 import BeaconHeader from "@/components/BeaconHeader";
 import DailyReport from "@/components/DailyReport";
 import RecentActivity from "@/components/RecentActivity";
@@ -49,6 +50,8 @@ export default async function DashboardPage() {
         <TopSignals signals={signals} />
         <RecentActivity snapshots={snapshots} />
       </div>
+
+      <AllCandidates signals={signals} />
 
       <DailyReport report={report} />
     </main>
