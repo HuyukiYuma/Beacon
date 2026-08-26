@@ -6,6 +6,7 @@ import ai_analysis
 import collect_github
 import comparison
 import report
+import report_markdown
 import signal_extraction
 import storage
 
@@ -24,14 +25,56 @@ def is_ai_analysis_enabled() -> bool:
     return os.environ.get(AI_ANALYSIS_ENV_VAR) == "1"
 
 
+def build_candidate_observations(signal_data: dict) -> dict[str, str]:
+    """AIから候補ごとのobservationを取得し、Signal JSONと照合する。
+
+    AI呼び出し自体が失敗した場合は、空の辞書を返す。この場合でも
+    report_markdown.build_report_markdownがフォールバック文で
+    Daily Reportを完成させるため、パイプライン全体は止まらない。
+    （AI分析はベストエフォートであり、失敗してもレポート生成を
+    ブロックしないという意図的な例外境界）
+    """
+
+    candidates = signal_data["candidates"]
+
+    if not candidates:
+        return {}
+
+    try:
+        raw_observations = ai_analysis.request_candidate_observations(signal_data)
+    except Exception as error:
+        print(f"AI Observation生成に失敗しました。フォールバック文で補います: {error}")
+        return {}
+
+    result = ai_analysis.validate_candidate_observations(candidates, raw_observations)
+
+    if result.unknown_names:
+        print(f"警告: Signal JSONに存在しないcandidate名を無視しました: {result.unknown_names}")
+
+    if result.duplicate_names:
+        print(f"警告: 重複したcandidate名は最初の1件のみ使用しました: {result.duplicate_names}")
+
+    if result.missing_names:
+        print(f"情報: 以下の候補はAI observationが得られずフォールバック文を使用します: {result.missing_names}")
+
+    return result.observations
+
+
 def generate_and_save_report(theme_name: str, signal_data: dict) -> None:
-    """SignalデータからAIレポートを生成し、Markdownとして保存する。"""
+    """AIによる候補ごとのobservationを取得し、Markdownを組み立てて保存する。
+
+    Markdown全体の組み立てはreport_markdown.pyが決定的に行う。
+    AI分析はWhat changedに入る短い観測文の生成のみを担当する。
+    """
 
     print("=" * 50)
     print("Beacon AI Analysis")
     print("=" * 50)
 
-    report_text = ai_analysis.generate_report(signal_data)
+    reason_counts = ai_analysis.count_selection_reasons(signal_data["candidates"])
+    observations = build_candidate_observations(signal_data)
+
+    report_text = report_markdown.build_report_markdown(signal_data, reason_counts, observations)
 
     report.save_report(theme_name, report_text)
     print()

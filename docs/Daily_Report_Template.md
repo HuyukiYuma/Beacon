@@ -2,8 +2,15 @@
 
 ## これは何か
 
-AI分析レイヤーが出力する最終的なレポートの構成テンプレートです。
-`Beacon_Prompt.md`の出力は、必ずこの構成に沿ったMarkdownになることを想定します。
+Daily Reportの構成テンプレートです。
+
+`report_markdown.py`が、このテンプレートの構造をSignal JSONと
+selection_reasons件数から決定的に組み立てます。AIが担当するのは
+各Candidateブロックの`What changed`に入る観測文（observation）だけであり、
+それ以外（見出し・URL・How large・Persistent or temporary・Evidence・
+Summary集計・Notes）はすべてPython側が生成します。AI observationが
+得られない場合も、`report_markdown.py`はSignal JSONの数値だけから
+機械的なフォールバック文を`What changed`に使い、レポート全体を完成させます。
 
 `{{ }}`はプレースホルダーで、実装時に実データへ置き換えられます。
 
@@ -31,7 +38,8 @@ AI分析レイヤーが出力する最終的なレポートの構成テンプレ
 
 - URL: {{candidate.url}}
 - What changed:
-  {{star_growth、hit_change、is_newなど、変化した事実}}
+  {{AIによる観測文。得られない場合はstar_growth・hit_change・is_newから
+    Python側が機械的に組み立てたフォールバック文}}
 - How large:
   {{previous_stars}} → {{current_stars}}（{{star_growth}}）
   {{previous_hits}} → {{current_hits}}（{{hit_change}}）

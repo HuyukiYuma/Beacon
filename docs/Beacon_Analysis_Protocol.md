@@ -54,6 +54,26 @@ AIはこのJSON以外の情報（学習知識による推測、外部の株価�
 追加された場合も、本Protocolが定める4つの問い・Evidence Levelの考え方・禁止事項は
 共通の原則として適用されます（フィールド名やスキーマはデータソースごとに個別定義します）。
 
+## Daily Reportの責務分担（Python / AI）
+
+Daily Report全文のうち、以下はすべて`report_markdown.py`がSignal JSONと
+selection_reasons件数から**決定的に**組み立てます。AIはこれらを生成しません。
+
+- H1見出し・比較期間・Summary・Candidatesの各見出し
+- 候補ごとのURL・How large（数値）・Persistent or temporary（留保文）・Evidence
+- Notes（免責文）
+
+AIが担当するのは、候補ごとの`What changed`に入る短い観測文（observation）
+**だけ**です。AIの出力はMarkdownではなく、tool use経由の構造化データ
+（`{"name": ..., "observation": ...}`の配列）に限定します。数値・URL・
+selection_reasonsはAIの出力に含めず、Python側がSignal JSONから直接使います
+（AIに再出力させると、桁のズレや誤記のリスクを構造的に持ち込むため）。
+
+AI observationが得られない候補（AI呼び出し自体の失敗、未知name、
+不足candidateなど）には、`report_markdown.py`がSignal JSONの数値だけから
+組み立てた機械的なフォールバック文を使います。これにより、AIが使えない
+場合でもPythonだけで最低限のDaily Reportを完成できます。
+
 ## selection_reasonsの意味（客観的な事実としての解釈）
 
 | コード | 意味 | AIが言ってよいこと | AIが言ってはいけないこと |
@@ -69,14 +89,14 @@ AIは理由コードをそのまま採点や順位付けの根拠として使っ
 ## selection_reasons件数の集計（Summary用）
 
 Daily ReportのSummaryに表示するselection_reasons別の件数（新規Repository数、
-キーワードヒット増加数など）は、**`ai_analysis.py`の`count_selection_reasons`が
-事前に集計し、AIへ渡します**。「Pythonは事実を計算し、AIは説明する」という
-設計思想に基づく判断です。
+キーワードヒット増加数など）は、`ai_analysis.py`の`count_selection_reasons`が
+集計し、`report_markdown.py`が直接Markdownへ書き込みます。**AIへは渡さず、
+AIの入出力に一切関与させません**。「Pythonは事実と決定的な構造を担当し、
+AIは説明・要約を担当する」という設計思想に基づく判断です。
 
-- AIはこの集計値をSummaryへそのまま転記するだけで、candidatesから自分で
-  数え直してはいけません。件数の算出はAIの役割ではありません
-  （LLMによる計算は数え間違いのリスクがあり、Observationに求められる
-  「検証可能で誰が見ても同じ結論に至る」という性質を損ないます）。
+- 件数の算出はAIの役割ではありません（LLMによる計算は数え間違いのリスクが
+  あり、Observationに求められる「検証可能で誰が見ても同じ結論に至る」という
+  性質を損ないます）。
 - `count_selection_reasons`は副作用のない純粋関数であり、どの候補がどの理由に
   該当するかという判定ロジック（`signal_extraction.py`の`select_candidates`）
   には一切関与しません。
@@ -117,20 +137,20 @@ L3は将来の拡張のために予約されたレベルです。
 
 ## 必ず答えるべき4つの問い（CLAUDE.md Product Principlesより）
 
-AIによる各候補の説明は、以下4点をこの順番で満たさなければなりません。
+各候補の説明は、以下4点をこの順番で満たさなければなりません。誰がどの問いに
+答えるかは固定されています（AI observationは1のみを担当し、2〜4は
+`report_markdown.py`が常にSignal JSONから直接生成します）。
 
-1. **What changed?**
+1. **What changed?**（AI observation、またはフォールバック文）
    `star_growth`、`hit_change`、`is_new`など、JSONの数値・フラグで何が変化したかを述べる。
-2. **How large was the change?**
+2. **How large was the change?**（Python: `report_markdown._format_how_large`）
    `previous_stars`→`current_stars`のような具体的な数値の変化量を明示する。
    「大きい／小さい」という主観的形容詞だけで済ませない。
-3. **Is the change persistent or temporary?**
+3. **Is the change persistent or temporary?**（Python: `report_markdown.PERSISTENCE_NOTE`）
    現時点では比較対象がSnapshot2件のみのため、**単発の観測結果である旨を明示する**。
    「継続的なトレンドである」と断定してはいけない（3件以上のSnapshot比較が可能になった
    段階で、初めて「複数期間で継続」という表現が許される）。
-   情報が不十分でこれを判断できない場合は、推測で埋めず「十分な証拠がない」
-   「継続観測が必要」と明記する。
-4. **Which evidence supports the signal?**
+4. **Which evidence supports the signal?**（Python: `report_markdown._format_evidence`）
    該当した`selection_reasons`を列挙し、それぞれがどのJSONフィールドに基づくかを示す。
 
 ## 禁止事項
@@ -150,6 +170,8 @@ AIによる各候補の説明は、以下4点をこの順番で満たさなけ�
 ## Revision History
 
 - **v1.0**（現行）: GitHubのSignal JSONのみを対象。AI出力はObservationのみ。
-  Evidence LevelはL1・L2のみ使用（L3は予約）。
+  Evidence LevelはL1・L2のみ使用（L3は予約）。Daily Report全文の決定的な部分
+  （見出し・URL・数値・Evidence・Notes）は`report_markdown.py`が組み立て、
+  AIは候補ごとの観測文（What changed）のみをtool use経由の構造化データで返す。
 - **v1.1以降（想定）**: 複数データソース（Multi-source）への対応、Hypothesis記述の解禁、
   Evidence Level L3（複数期間の継続観測）の実運用化を検討する。

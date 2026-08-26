@@ -2,6 +2,7 @@ import importlib
 import json
 import os
 from pathlib import Path
+from typing import NamedTuple
 
 
 PROMPT_FILE_PATH = Path("docs") / "Beacon_Prompt.md"
@@ -11,7 +12,6 @@ PROVIDERS_DIRECTORY = Path("providers")
 REQUIRED_SIGNAL_KEYS = ("theme", "period", "candidates")
 
 USER_PROMPT_PLACEHOLDER = "{signal_extraction.pyが出力したJSONをここに挿入}"
-REASON_COUNTS_PLACEHOLDER = "{selection_reasons別件数集計をここに挿入}"
 
 # signal_extraction.pyのselect_candidatesが付与する理由コード。
 # ここで新しい理由コードを追加することはない（判定ロジック側の変更に追従するだけ）。
@@ -96,24 +96,12 @@ def _load_prompt_parts() -> tuple[str, str]:
     return system_prompt, user_prompt_template
 
 
-def _build_user_prompt(
-    user_prompt_template: str,
-    signal_json: dict,
-    reason_counts: dict[str, int],
-) -> str:
-    """User Promptのプレースホルダーに、Signal JSONと集計済み件数を差し込む。
-
-    reason_countsはcount_selection_reasonsで事前計算された値であり、
-    AIはこれを転記するだけで自分で数え直すことはない。
-    """
+def _build_user_prompt(user_prompt_template: str, signal_json: dict) -> str:
+    """User Promptのプレースホルダーに、実際のSignal JSONを差し込む。"""
 
     signal_json_text = json.dumps(signal_json, ensure_ascii=False, indent=2)
-    reason_counts_text = json.dumps(reason_counts, ensure_ascii=False, indent=2)
 
-    prompt = user_prompt_template.replace(USER_PROMPT_PLACEHOLDER, signal_json_text)
-    prompt = prompt.replace(REASON_COUNTS_PLACEHOLDER, reason_counts_text)
-
-    return prompt
+    return user_prompt_template.replace(USER_PROMPT_PLACEHOLDER, signal_json_text)
 
 
 def _load_env_file() -> None:
@@ -162,12 +150,14 @@ def _load_provider_module(provider_name: str):
         ) from error
 
 
-def _call_provider(system_prompt: str, user_prompt: str) -> str:
-    """設定されたAIプロバイダーへプロンプトを送信し、生成された文章を受け取る。
+def _call_provider(system_prompt: str, user_prompt: str) -> list[dict]:
+    """設定されたAIプロバイダーへプロンプトを送信し、候補ごとのobservationsを受け取る。
 
-    プロバイダー固有の処理は`providers/`配下の各モジュールが持つ。
-    ここではAI_PROVIDER/AI_MODELの設定に基づいてモジュールを読み込み、
-    呼び出すだけであり、特定プロバイダーのSDKには依存しない。
+    プロバイダー固有の処理（tool useの組み立てや応答からの取り出しなど）は
+    `providers/`配下の各モジュールが持つ。ここではAI_PROVIDER/AI_MODELの設定に
+    基づいてモジュールを読み込み、呼び出すだけであり、特定プロバイダーのSDKには
+    依存しない。戻り値はMarkdown文字列ではなく、
+    [{"name": ..., "observation": ...}, ...]という構造化データ。
     """
 
     _load_env_file()
@@ -186,14 +176,87 @@ def _call_provider(system_prompt: str, user_prompt: str) -> str:
     return provider_module.generate(system_prompt, user_prompt, model_name)
 
 
-def generate_report(signal_json: dict) -> str:
-    """Signal JSONから、AIによるDaily Report用の説明文を生成する。"""
+def request_candidate_observations(signal_json: dict) -> list[dict]:
+    """Signal JSONをAIへ送り、候補ごとのobservation（What changed相当の観測文）を取得する。
+
+    Daily Report全体のMarkdown組み立てはreport_markdown.pyが担当するため、
+    ここではAIから構造化データ（候補ごとのobservation）を取得するだけ。
+    candidatesが空の場合はAPIを呼ばずに空リストを返す。
+    """
 
     _validate_signal_json(signal_json)
 
-    reason_counts = count_selection_reasons(signal_json["candidates"])
+    if not signal_json["candidates"]:
+        return []
 
     system_prompt, user_prompt_template = _load_prompt_parts()
-    user_prompt = _build_user_prompt(user_prompt_template, signal_json, reason_counts)
+    user_prompt = _build_user_prompt(user_prompt_template, signal_json)
 
     return _call_provider(system_prompt, user_prompt)
+
+
+class ObservationValidationResult(NamedTuple):
+    """validate_candidate_observationsの結果。
+
+    observationsは{候補name: observation文}の辞書で、
+    report_markdown.pyへそのまま渡せる形。
+    """
+
+    observations: dict[str, str]
+    unknown_names: list[str]
+    duplicate_names: list[str]
+    missing_names: list[str]
+
+
+def validate_candidate_observations(
+    candidates: list[dict],
+    raw_observations: list[dict],
+) -> ObservationValidationResult:
+    """AIが返した候補ごとのobservationsを、Signal JSONのcandidatesと照合する。
+
+    副作用のない純粋関数。
+
+    - Signal JSONのcandidatesに存在しないnameは「未知name」として除外する
+      （AIが存在しないRepositoryをでっち上げた場合の混入を防ぐ）。
+    - 同じnameが複数回出現した場合は「重複name」として記録し、
+      最初の1件のみを採用する。
+    - name・observationのどちらかが文字列でない項目は不正な項目として無視する
+      （＝その候補は「不足candidate」として扱われる）。
+    - candidatesにあるがobservationsに採用されなかったnameは
+      「不足candidate」として記録する。report_markdown.py側で
+      フォールバック文が使われることを想定している。
+    """
+
+    known_names = {candidate["name"] for candidate in candidates}
+
+    observations: dict[str, str] = {}
+    unknown_names: list[str] = []
+    duplicate_names: list[str] = []
+
+    for item in raw_observations:
+        name = item.get("name")
+        observation = item.get("observation")
+
+        if not isinstance(name, str) or not isinstance(observation, str):
+            continue
+
+        if name not in known_names:
+            unknown_names.append(name)
+            continue
+
+        if name in observations:
+            duplicate_names.append(name)
+            continue
+
+        observations[name] = observation
+
+    missing_names = [
+        candidate["name"] for candidate in candidates if candidate["name"] not in observations
+    ]
+
+    return ObservationValidationResult(
+        observations=observations,
+        unknown_names=unknown_names,
+        duplicate_names=duplicate_names,
+        missing_names=missing_names,
+    )

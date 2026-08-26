@@ -4,20 +4,71 @@ import os
 API_KEY_ENV_VAR = "ANTHROPIC_API_KEY"
 
 # 料金事故を避けるため、出力トークン数の上限を固定する
-# （Daily Reportが途中で切れないよう、最後まで生成できる値にしている）
 #
 # この値は「上限」であって「目標」ではない。
 # 実際に生成された分だけが課金対象なので、上げてもコストは増えない。
 #
-# 新しいモデルではthinking（内部推論）が既定で有効になり、
-# max_tokensはthinkingと本文の合計に対する上限として働く。
-# 候補が10件を超えるとテンプレート構成の本文だけで2,000トークンを超えるため、
-# thinkingの分を含めた余裕を確保している。
+# 出力は候補ごとの短いobservation文（JSON構造）のみであり、
+# Daily Report全文（Markdown）はここでは生成しないため、
+# 実際の出力トークン数は8000よりかなり小さくなる見込み。
 MAX_TOKENS = 8000
 
+# AIに返させるtoolの名前。tool_choiceで固定し、必ずこのtoolを
+# 1回だけ呼ばせることで、自由形式のMarkdownが返ってくることを防ぐ。
+OBSERVATION_TOOL_NAME = "submit_candidate_observations"
 
-def generate(system_prompt: str, user_prompt: str, model: str) -> str:
-    """Anthropic (Claude) APIへプロンプトを送信し、生成された文章を受け取る。"""
+# 候補ごとのobservationだけを受け取るtool定義。
+# star数・hits数・URL・selection_reasonsといったSignal JSON由来の事実は
+# ここに含めない。AIに再出力させないためであり、Python側
+# （report_markdown.py）がSignal JSONから直接使用する。
+OBSERVATION_TOOL = {
+    "name": OBSERVATION_TOOL_NAME,
+    "description": (
+        "各候補（Repository）について、何が変化したかを短い日本語の観測文として送信する。"
+        "star数・hits数・URL・selection_reasonsなど、Signal JSONに含まれる数値や事実は"
+        "ここに含めない（Python側が別途Signal JSONから直接使用するため）。"
+    ),
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "observations": {
+                "type": "array",
+                "description": "candidatesに含まれる候補ごとの観測文の配列。",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": (
+                                "対象RepositoryのSignal JSON上のname（例: owner/repo）。"
+                                "candidatesに存在する値と完全に一致させること。"
+                            ),
+                        },
+                        "observation": {
+                            "type": "string",
+                            "description": (
+                                "その候補について何が変化したかを述べる、"
+                                "1〜2文の日本語の観測文。具体的な数値は含めない。"
+                            ),
+                        },
+                    },
+                    "required": ["name", "observation"],
+                },
+            },
+        },
+        "required": ["observations"],
+    },
+}
+
+
+def generate(system_prompt: str, user_prompt: str, model: str) -> list[dict]:
+    """Anthropic (Claude) APIへプロンプトを送信し、候補ごとのobservationsを受け取る。
+
+    自由形式のMarkdown全文を生成させるのではなく、tool use（tool_choiceで
+    強制）によって構造化データとして受け取る。戻り値は
+    [{"name": ..., "observation": ...}, ...] というリストであり、
+    Daily Report全文の組み立てはreport_markdown.pyが別途行う。
+    """
 
     try:
         import anthropic
@@ -51,6 +102,12 @@ def generate(system_prompt: str, user_prompt: str, model: str) -> str:
             max_tokens=MAX_TOKENS,
             system=system_prompt,
             messages=[{"role": "user", "content": user_prompt}],
+            tools=[OBSERVATION_TOOL],
+            tool_choice={
+                "type": "tool",
+                "name": OBSERVATION_TOOL_NAME,
+                "disable_parallel_tool_use": True,
+            },
         )
     except anthropic.AuthenticationError as error:
         raise RuntimeError(
@@ -72,10 +129,27 @@ def generate(system_prompt: str, user_prompt: str, model: str) -> str:
     print(f"Stop reason  : {response.stop_reason}")
 
     if response.stop_reason == "max_tokens":
-        print(
-            "Warning: MAX_TOKENSに達したため、出力が途中で終了している可能性があります。"
+        raise RuntimeError(
+            "MAX_TOKENSに達したため、tool useの出力が途中で終了した可能性があります。"
         )
 
-    text_blocks = [block.text for block in response.content if block.type == "text"]
+    tool_use_blocks = [
+        block
+        for block in response.content
+        if block.type == "tool_use" and block.name == OBSERVATION_TOOL_NAME
+    ]
 
-    return "".join(text_blocks)
+    if not tool_use_blocks:
+        raise RuntimeError(
+            f"AI応答にtool_useブロック '{OBSERVATION_TOOL_NAME}' が"
+            f"含まれていません (stop_reason={response.stop_reason})。"
+        )
+
+    observations = tool_use_blocks[0].input.get("observations")
+
+    if not isinstance(observations, list):
+        raise RuntimeError(
+            "tool useの'observations'がリストではありません。"
+        )
+
+    return observations
