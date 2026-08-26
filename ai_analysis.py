@@ -11,6 +11,41 @@ PROVIDERS_DIRECTORY = Path("providers")
 REQUIRED_SIGNAL_KEYS = ("theme", "period", "candidates")
 
 USER_PROMPT_PLACEHOLDER = "{signal_extraction.pyが出力したJSONをここに挿入}"
+REASON_COUNTS_PLACEHOLDER = "{selection_reasons別件数集計をここに挿入}"
+
+# signal_extraction.pyのselect_candidatesが付与する理由コード。
+# ここで新しい理由コードを追加することはない（判定ロジック側の変更に追従するだけ）。
+KNOWN_SELECTION_REASONS = (
+    "new_repository",
+    "increased_keyword_hits",
+    "top_star_growth",
+    "multiple_keyword_matches",
+)
+
+
+def count_selection_reasons(candidates: list[dict]) -> dict[str, int]:
+    """候補のselection_reasonsを、既知の理由コードごとに集計する。
+
+    副作用のない純粋関数。「どの候補がどの理由に該当するか」という判定
+    （signal_extraction.pyのselect_candidates）には一切関与せず、既に
+    候補へ記録された理由コードを数えるだけ。
+
+    未知の理由コード（KNOWN_SELECTION_REASONSにないもの）が含まれていた場合は、
+    黙って無視せずValueErrorを送出する。件数が静かに欠落するとSummaryが
+    実態と食い違うため（CLAUDE.mdの「Do not silently catch unexpected errors」
+    にも従う）。
+    """
+
+    counts = {reason: 0 for reason in KNOWN_SELECTION_REASONS}
+
+    for candidate in candidates:
+        for reason in candidate["selection_reasons"]:
+            if reason not in counts:
+                raise ValueError(f"未知のselection_reasonsコードです: '{reason}'")
+
+            counts[reason] += 1
+
+    return counts
 
 
 def _validate_signal_json(signal_json: dict) -> None:
@@ -61,12 +96,24 @@ def _load_prompt_parts() -> tuple[str, str]:
     return system_prompt, user_prompt_template
 
 
-def _build_user_prompt(user_prompt_template: str, signal_json: dict) -> str:
-    """User Promptのプレースホルダーに、実際のSignal JSONを差し込む。"""
+def _build_user_prompt(
+    user_prompt_template: str,
+    signal_json: dict,
+    reason_counts: dict[str, int],
+) -> str:
+    """User Promptのプレースホルダーに、Signal JSONと集計済み件数を差し込む。
+
+    reason_countsはcount_selection_reasonsで事前計算された値であり、
+    AIはこれを転記するだけで自分で数え直すことはない。
+    """
 
     signal_json_text = json.dumps(signal_json, ensure_ascii=False, indent=2)
+    reason_counts_text = json.dumps(reason_counts, ensure_ascii=False, indent=2)
 
-    return user_prompt_template.replace(USER_PROMPT_PLACEHOLDER, signal_json_text)
+    prompt = user_prompt_template.replace(USER_PROMPT_PLACEHOLDER, signal_json_text)
+    prompt = prompt.replace(REASON_COUNTS_PLACEHOLDER, reason_counts_text)
+
+    return prompt
 
 
 def _load_env_file() -> None:
@@ -144,7 +191,9 @@ def generate_report(signal_json: dict) -> str:
 
     _validate_signal_json(signal_json)
 
+    reason_counts = count_selection_reasons(signal_json["candidates"])
+
     system_prompt, user_prompt_template = _load_prompt_parts()
-    user_prompt = _build_user_prompt(user_prompt_template, signal_json)
+    user_prompt = _build_user_prompt(user_prompt_template, signal_json, reason_counts)
 
     return _call_provider(system_prompt, user_prompt)

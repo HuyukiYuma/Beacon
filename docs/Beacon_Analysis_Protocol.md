@@ -66,6 +66,25 @@ AIはこのJSON以外の情報（学習知識による推測、外部の株価�
 理由コードは**事実の記録**であり、価値判断のラベルではありません。
 AIは理由コードをそのまま採点や順位付けの根拠として使ってはいけません。
 
+## selection_reasons件数の集計（Summary用）
+
+Daily ReportのSummaryに表示するselection_reasons別の件数（新規Repository数、
+キーワードヒット増加数など）は、**`ai_analysis.py`の`count_selection_reasons`が
+事前に集計し、AIへ渡します**。「Pythonは事実を計算し、AIは説明する」という
+設計思想に基づく判断です。
+
+- AIはこの集計値をSummaryへそのまま転記するだけで、candidatesから自分で
+  数え直してはいけません。件数の算出はAIの役割ではありません
+  （LLMによる計算は数え間違いのリスクがあり、Observationに求められる
+  「検証可能で誰が見ても同じ結論に至る」という性質を損ないます）。
+- `count_selection_reasons`は副作用のない純粋関数であり、どの候補がどの理由に
+  該当するかという判定ロジック（`signal_extraction.py`の`select_candidates`）
+  には一切関与しません。
+- 集計対象は既知の4種類（`new_repository`, `increased_keyword_hits`,
+  `top_star_growth`, `multiple_keyword_matches`）に限定します。未知の理由コードが
+  含まれていた場合は、黙って無視せず例外を送出します（件数が静かに欠落して
+  Summaryが実態と食い違うことを防ぐため）。
+
 ## Observation と Hypothesis
 
 Beaconの分析には2種類の記述があり得ます。

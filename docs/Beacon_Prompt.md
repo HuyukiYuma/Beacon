@@ -36,12 +36,19 @@ Beaconは新興技術の早期シグナルを検出するツールであり、�
 4. candidatesが空の場合は、
    「今回の期間では、条件に該当する候補はありませんでした」とだけ出力してください。
 5. 出力は日本語、Markdown形式とし、
-   Daily_Report_Template.mdの構成に沿った見出し構造にしてください。
+   Daily_Report_Template.mdの見出し構造（見出しレベル・文言・順序）に厳密に一致させてください。
+6. 候補（Candidates）は`### {{candidate.name}}`という見出しのみで区切ってください。
+   「1. 2. 3...」のような順位を意味する連番を付けてはいけません。
+   候補の記載順は判定・順位付けを意味しません。
+7. Summaryの各selection_reasons件数（新規Repository数、キーワードヒット増加数など）は、
+   入力データで渡される集計済みの件数をそのまま転記してください。
+   candidatesの配列を自分で数え直してはいけません。
 
 # 入力データの形式
 
 theme（テーマ名）、period.previous / period.current（比較期間）、
-candidatesの配列（各Repositoryの客観的な差分とselection_reasons）が渡されます。
+candidatesの配列（各Repositoryの客観的な差分とselection_reasons）に加えて、
+selection_reasons別の件数集計（Python側で事前計算済み）が渡されます。
 ```
 
 ## User Prompt（下書き）
@@ -51,6 +58,11 @@ candidatesの配列（各Repositoryの客観的な差分とselection_reasons）�
 Beacon_Analysis_Protocolに従って、Daily Reportを作成してください。
 
 {signal_extraction.pyが出力したJSONをここに挿入}
+
+以下はselection_reasons別の件数集計です。Python側で計算済みのため、
+Summaryではこの数値をそのまま転記してください。candidatesから自分で数え直さないでください。
+
+{selection_reasons別件数集計をここに挿入}
 ```
 
 ## 今後の検討事項（未確定・実装時に詰める）
