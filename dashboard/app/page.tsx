@@ -28,9 +28,9 @@ export const dynamic = "force-dynamic";
  */
 export default async function DashboardPage() {
   const [signals, latestSnapshot, snapshots, report] = await Promise.all([
-    getLatestSignals(MONITORED_THEME),
-    getLatestSnapshot(MONITORED_THEME),
-    getSnapshotHistory(MONITORED_THEME, RECENT_ACTIVITY_LIMIT),
+    getLatestSignals(),
+    getLatestSnapshot(),
+    getSnapshotHistory(RECENT_ACTIVITY_LIMIT),
     getLatestReport(MONITORED_THEME),
   ]);
 
