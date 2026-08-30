@@ -1,11 +1,32 @@
+import os
+
 import requests
 
 
 API_URL = "https://api.github.com/search/repositories"
 
+GITHUB_TOKEN_ENV_VAR = "GITHUB_TOKEN"
+
 # Repository名をキーにして、
 # hits・stars・urlをまとめて保存します。
 repository_profiles = {}
+
+
+def _build_request_headers() -> dict[str, str]:
+    """GITHUB_TOKENが環境変数にあれば、認証用のAuthorization headerを組み立てる。
+
+    未認証アクセスはGitHub Search APIのレート制限が非常に厳しいため、
+    GitHub Actions等でGITHUB_TOKENが渡されている場合は認証して呼び出す。
+    環境変数が無いローカル実行では、従来通り未認証のヘッダー(空の辞書)を返す。
+    トークンの値自体はここでも他の場所でも一切printしない。
+    """
+
+    github_token = os.environ.get(GITHUB_TOKEN_ENV_VAR)
+
+    if not github_token:
+        return {}
+
+    return {"Authorization": f"Bearer {github_token}"}
 
 
 def search_github(query: str, limit: int = 5) -> None:
@@ -22,6 +43,7 @@ def search_github(query: str, limit: int = 5) -> None:
         response = requests.get(
             API_URL,
             params=params,
+            headers=_build_request_headers(),
             timeout=10,
         )
 

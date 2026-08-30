@@ -1,0 +1,97 @@
+# Beacon Dashboard Update
+#
+# main.py（GitHub収集→Snapshot→Signal→AI Observation→Daily Report）と
+# publish_dashboard.py（dashboard/data/への公開）をクラウド上で実行する。
+#
+# v0.2 Day 23時点では手動実行(workflow_dispatch)のみ。
+# cronによる定期実行はクラウドE2E成功を確認してから別途追加する。
+
+name: Beacon Dashboard Update
+
+on:
+  workflow_dispatch:
+
+# git pushにはcontents: writeが必要。それ以外の権限は付与しない。
+permissions:
+  contents: write
+
+# 手動実行の多重起動によるgit pushの競合を避けるため直列化する。
+# 実行中のジョブはAPI呼び出し済みの可能性があるため、キャンセルはしない。
+concurrency:
+  group: beacon-dashboard-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      # data/はGit管理外(.gitignore)のため、クリーンなrunnerには
+      # 前回Snapshotが存在しない。Signal Extraction(前回・今回の2時点比較)を
+      # 成立させるため、既にGit管理下にあるdashboard/data/latest_snapshot.json
+      # (直近でDashboardへ公開したSnapshot)を「前回Snapshot」としてdata/へ
+      # 複製する。元のファイル名はlatest_meta.jsonに記録されているため、
+      # それを使って正しいタイムスタンプ付きファイル名で配置する。
+      # 公開データがまだ無い場合(初回実行)は何もせず、そのままスキップする。
+      - name: Seed previous snapshot from published dashboard data
+        run: |
+          python - <<'PY'
+          import json
+          import shutil
+          from pathlib import Path
+
+          meta_path = Path("dashboard/data/latest_meta.json")
+          snapshot_path = Path("dashboard/data/latest_snapshot.json")
+
+          if not meta_path.exists() or not snapshot_path.exists():
+              print("公開済みのSnapshotが無いため、前回Snapshotのシードをスキップします(初回実行)。")
+          else:
+              meta = json.loads(meta_path.read_text(encoding="utf-8"))
+              snapshot_file_name = meta.get("snapshot_file")
+
+              if not snapshot_file_name:
+                  print("latest_meta.jsonにsnapshot_fileが記録されていないため、シードをスキップします。")
+              else:
+                  Path("data").mkdir(exist_ok=True)
+                  destination = Path("data") / snapshot_file_name
+                  shutil.copyfile(snapshot_path, destination)
+                  print(f"前回Snapshotをシードしました: {destination}")
+          PY
+
+      - name: Run Beacon pipeline (collection + AI analysis)
+        env:
+          BEACON_AI_ANALYSIS: "1"
+          AI_PROVIDER: "anthropic"
+          AI_MODEL: "claude-sonnet-5"
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          # GitHub Actionsが自動発行する標準トークン。PATや追加Secretの
+          # 作成は不要。GitHub Search APIの認証(レート制限緩和)にのみ使う。
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python main.py
+
+      - name: Publish dashboard data
+        run: python publish_dashboard.py
+
+      - name: Commit and push dashboard data if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git status --porcelain -- dashboard/data | grep -q .; then
+            git add dashboard/data
+            git commit -m "Day 23: Automated dashboard data update"
+            git push
+          else
+            echo "dashboard/dataに変更が無いため、commitをスキップします。"
+          fi
