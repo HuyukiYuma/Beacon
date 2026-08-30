@@ -3,13 +3,19 @@
 # main.py（GitHub収集→Snapshot→Signal→AI Observation→Daily Report）と
 # publish_dashboard.py（dashboard/data/への公開）をクラウド上で実行する。
 #
-# v0.2 Day 23時点では手動実行(workflow_dispatch)のみ。
-# cronによる定期実行はクラウドE2E成功を確認してから別途追加する。
+# v0.2 Day 23で手動実行(workflow_dispatch)のクラウドE2Eを確認済み。
+# Day 24でschedule triggerを追加し、毎日1回の定期実行にも対応した。
 
 name: Beacon Dashboard Update
 
 on:
   workflow_dispatch:
+  schedule:
+    # on.scheduleのtimezoneキーにIANA timezone名を指定できる(GitHub公式仕様)。
+    # Australia/Sydneyを明示することで、AEST/AEDTの切り替え(DST)に
+    # 自動追従し、常にSydney現地時間の朝6:00に実行される。
+    - cron: '0 6 * * *'
+      timezone: 'Australia/Sydney'
 
 # git pushにはcontents: writeが必要。それ以外の権限は付与しない。
 permissions:
