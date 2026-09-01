@@ -1,6 +1,6 @@
 # Beacon Daily Report - AI Agent
 
-比較期間: 2026-08-30T22:19:04 〜 2026-08-31T23:34:19
+比較期間: 2026-08-31T23:34:19 〜 2026-09-01T22:19:24
 
 ## Summary
 
@@ -12,66 +12,13 @@
 
 ## Candidates
 
-### langflow-ai/langflow
+### cline/cline
 
-- URL: https://github.com/langflow-ai/langflow
+- URL: https://github.com/cline/cline
 - What changed:
-  Star数が増加しました（star_growth: 77）。
+  Star数が増加しました（star_growth: 56）。
 - How large:
-  153915 → 153992（77）
-  1 → 1（0）
-- Persistent or temporary:
-  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
-- Evidence:
-  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
-
-### msitarzewski/agency-agents
-
-- URL: https://github.com/msitarzewski/agency-agents
-- What changed:
-  Star数が増加しました（star_growth: 252）。
-- How large:
-  149038 → 149290（252）
-  1 → 1（0）
-- Persistent or temporary:
-  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
-- Evidence:
-  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
-
-### CherryHQ/cherry-studio
-
-- URL: https://github.com/CherryHQ/cherry-studio
-- What changed:
-  Star数が増加しました（star_growth: 44）。
-- How large:
-  51265 → 51309（44）
-  1 → 1（0）
-- Persistent or temporary:
-  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
-- Evidence:
-  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
-
-### ruvnet/ruflo
-
-- URL: https://github.com/ruvnet/ruflo
-- What changed:
-  Star数が増加しました（star_growth: 184）。
-- How large:
-  69827 → 70011（184）
-  2 → 2（0）
-- Persistent or temporary:
-  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
-- Evidence:
-  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
-  - multiple_keyword_matches: 現在2件以上のキーワードにヒットしている
-
-### langchain-ai/langchain
-
-- URL: https://github.com/langchain-ai/langchain
-- What changed:
-  Star数が増加しました（star_growth: 74）。
-- How large:
-  145296 → 145370（74）
+  67244 → 67300（56）
   1 → 1（0）
 - Persistent or temporary:
   今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
@@ -82,9 +29,75 @@
 
 - URL: https://github.com/obra/superpowers
 - What changed:
-  Star数が増加しました（star_growth: 398）。
+  Star数が増加しました（star_growth: 354）。
 - How large:
-  279663 → 280061（398）
+  280061 → 280415（354）
+  2 → 2（0）
+- Persistent or temporary:
+  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
+- Evidence:
+  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
+  - multiple_keyword_matches: 現在2件以上のキーワードにヒットしている
+
+### langflow-ai/langflow
+
+- URL: https://github.com/langflow-ai/langflow
+- What changed:
+  Star数が増加しました（star_growth: 51）。
+- How large:
+  153992 → 154043（51）
+  1 → 1（0）
+- Persistent or temporary:
+  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
+- Evidence:
+  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
+
+### msitarzewski/agency-agents
+
+- URL: https://github.com/msitarzewski/agency-agents
+- What changed:
+  Star数が増加しました（star_growth: 217）。
+- How large:
+  149290 → 149507（217）
+  1 → 1（0）
+- Persistent or temporary:
+  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
+- Evidence:
+  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
+
+### langchain-ai/langchain
+
+- URL: https://github.com/langchain-ai/langchain
+- What changed:
+  Star数が増加しました（star_growth: 84）。
+- How large:
+  145370 → 145454（84）
+  1 → 1（0）
+- Persistent or temporary:
+  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
+- Evidence:
+  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
+
+### khoj-ai/khoj
+
+- URL: https://github.com/khoj-ai/khoj
+- What changed:
+  Star数が増加しました（star_growth: 49）。
+- How large:
+  36838 → 36887（49）
+  1 → 1（0）
+- Persistent or temporary:
+  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
+- Evidence:
+  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
+
+### crewAIInc/crewAI
+
+- URL: https://github.com/crewAIInc/crewAI
+- What changed:
+  Star数が増加しました（star_growth: 70）。
+- How large:
+  57889 → 57959（70）
   2 → 2（0）
 - Persistent or temporary:
   今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
@@ -98,52 +111,39 @@
 - What changed:
   Star数が増加しました（star_growth: 507）。
 - How large:
-  238479 → 238986（507）
+  238986 → 239493（507）
   1 → 1（0）
 - Persistent or temporary:
   今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
 - Evidence:
   - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
 
-### langgenius/dify
+### ruvnet/ruflo
 
-- URL: https://github.com/langgenius/dify
+- URL: https://github.com/ruvnet/ruflo
 - What changed:
-  Star数が増加しました（star_growth: 114）。
+  Star数が増加しました（star_growth: 126）。
 - How large:
-  153912 → 154026（114）
-  1 → 1（0）
-- Persistent or temporary:
-  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
-- Evidence:
-  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
-
-### cline/cline
-
-- URL: https://github.com/cline/cline
-- What changed:
-  Star数が増加しました（star_growth: 58）。
-- How large:
-  67186 → 67244（58）
-  1 → 1（0）
-- Persistent or temporary:
-  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
-- Evidence:
-  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
-
-### crewAIInc/crewAI
-
-- URL: https://github.com/crewAIInc/crewAI
-- What changed:
-  Star数が増加しました（star_growth: 55）。
-- How large:
-  57834 → 57889（55）
+  70011 → 70137（126）
   2 → 2（0）
 - Persistent or temporary:
   今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
 - Evidence:
   - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
   - multiple_keyword_matches: 現在2件以上のキーワードにヒットしている
+
+### langgenius/dify
+
+- URL: https://github.com/langgenius/dify
+- What changed:
+  Star数が増加しました（star_growth: 94）。
+- How large:
+  154026 → 154120（94）
+  1 → 1（0）
+- Persistent or temporary:
+  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
+- Evidence:
+  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
 
 ## Notes
 
