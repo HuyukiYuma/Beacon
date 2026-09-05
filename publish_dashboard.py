@@ -15,6 +15,12 @@ data/配下にPythonが生成した最新のSnapshot・Signal JSON・Daily Repor
 - 全Snapshot履歴は公開せず、直近HISTORY_LIMIT件の要約(収集日時と件数)
   だけをsnapshot_history.jsonとして公開する。Dashboard側はこの要約を
   そのまま表示するだけで、再計算は行わない。
+- snapshot_history.jsonは実行のたびにdata/を再スキャンして作り直すのではなく、
+  前回公開済みのdashboard/data/snapshot_history.json(Git管理下で実行間を
+  またいで残る)に今回のSnapshot1件をマージする方式で積み上げる。
+  GitHub Actionsのクリーンなrunnerではdata/に前回シード分と今回分の
+  Snapshotしか存在しないため、data/を毎回スキャンする方式では
+  「直近5回の連続履歴」が成立しないため。
 
 Dashboardはdashboard/data/だけを読み、Pythonの内部生成物置き場である
 リポジトリ直下のdata/を直接参照しない。
@@ -66,15 +72,6 @@ def _find_latest_file(directory: Path, pattern: str) -> Path | None:
     return matched_files[-1]
 
 
-def _find_recent_files(directory: Path, pattern: str, limit: int) -> list[Path]:
-    """指定ディレクトリから、パターンに一致する直近limit件のファイルを新しい順で返す。"""
-
-    matched_files = sorted(directory.glob(pattern))
-    recent_files = matched_files[-limit:]
-
-    return list(reversed(recent_files))
-
-
 def _build_snapshot_history_entry(snapshot_file: Path) -> dict:
     """1件のSnapshotファイルから、Recent Activity表示に必要な要約だけを取り出す。
 
@@ -91,25 +88,44 @@ def _build_snapshot_history_entry(snapshot_file: Path) -> dict:
     }
 
 
-def publish_snapshot_history(theme_name: str) -> list[dict]:
-    """直近HISTORY_LIMIT件のSnapshotの要約を、dashboard/data/へJSONとして書き出す。
+def _load_published_history() -> list[dict]:
+    """前回公開済みのsnapshot_history.jsonを読み込む。無ければ空リストを返す。"""
 
-    全Snapshot履歴を公開するのではなく、Recent Activity表示に必要な
-    直近分だけに絞る。新しい順(先頭が最新)で書き出す。
+    history_path = PUBLISH_DIRECTORY / HISTORY_DEST_NAME
+
+    if not history_path.exists():
+        return []
+
+    with history_path.open("r", encoding="utf-8") as file:
+        return json.load(file)
+
+
+def publish_snapshot_history(
+    theme_name: str, latest_snapshot_file: Path | None
+) -> list[dict]:
+    """前回公開済みの履歴に今回のSnapshotをマージし、dashboard/data/へ書き出す。
+
+    data/を毎回スキャンするのではなく、前回公開済みのsnapshot_history.json
+    (Git管理下で実行間をまたいで残る)を土台にする。今回のSnapshotを追加し、
+    file_nameで重複除去したうえでcollected_at降順に並べ替え、
+    直近HISTORY_LIMIT件だけを残す。
     """
-
-    safe_theme_name = _safe_theme_name(theme_name)
 
     PUBLISH_DIRECTORY.mkdir(parents=True, exist_ok=True)
 
-    recent_snapshot_files = _find_recent_files(
-        DATA_DIRECTORY, f"github_{safe_theme_name}_*.json", HISTORY_LIMIT
-    )
+    history_by_file_name = {
+        entry["file_name"]: entry for entry in _load_published_history()
+    }
 
-    history = [
-        _build_snapshot_history_entry(snapshot_file)
-        for snapshot_file in recent_snapshot_files
-    ]
+    if latest_snapshot_file is not None:
+        new_entry = _build_snapshot_history_entry(latest_snapshot_file)
+        history_by_file_name[new_entry["file_name"]] = new_entry
+
+    history = sorted(
+        history_by_file_name.values(),
+        key=lambda entry: entry["collected_at"],
+        reverse=True,
+    )[:HISTORY_LIMIT]
 
     history_path = PUBLISH_DIRECTORY / HISTORY_DEST_NAME
 
@@ -188,7 +204,7 @@ def publish_dashboard_data(theme_name: str) -> dict[str, str | None]:
 
     print(f"Published meta      : {meta_path}")
 
-    publish_snapshot_history(theme_name)
+    publish_snapshot_history(theme_name, latest_snapshot)
 
     return published
 

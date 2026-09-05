@@ -13,8 +13,14 @@ on:
   schedule:
     # on.scheduleのtimezoneキーにIANA timezone名を指定できる(GitHub公式仕様)。
     # Australia/Sydneyを明示することで、AEST/AEDTの切り替え(DST)に
-    # 自動追従し、常にSydney現地時間の朝6:00に実行される。
-    - cron: '0 6 * * *'
+    # 自動追従し、常にSydney現地時間02:17に実行される。
+    #
+    # Day 24.5: GitHub Actionsのscheduled runは実際には1〜3時間程度
+    # 遅延する場合があることを確認した。Beaconの目的は「6時ぴったりに
+    # 収集すること」ではなく「朝起きた時点で最新のBeaconが完成していること」
+    # のため、毎時0分付近の混雑を避けつつ遅延分の余裕を持たせて
+    # 開始時刻を02:17へ変更した。
+    - cron: '17 2 * * *'
       timezone: 'Australia/Sydney'
 
 # git pushにはcontents: writeが必要。それ以外の権限は付与しない。

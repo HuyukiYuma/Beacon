@@ -6,15 +6,63 @@
  */
 
 /**
- * Pythonが出力したISO形式の日時を、そのまま読める形にする。
+ * Dashboardで時刻を表示するタイムゾーン。
  *
- * 例: "2026-08-16T18:11:39" -> "2026-08-16 18:11:39"
+ * 内部データ(collected_at等)はUTCのまま保持し、表示時にのみここへ変換する。
+ * IANA timezone名を使うことでAEST/AEDT(DST)へ自動追従し、UTC+10/+11の
+ * ハードコードを避けている。
+ */
+const DISPLAY_TIME_ZONE = "Australia/Sydney";
+
+const displayDateTimeFormatter = new Intl.DateTimeFormat("en-CA", {
+  timeZone: DISPLAY_TIME_ZONE,
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hour12: false,
+});
+
+const displayTimeZoneNameFormatter = new Intl.DateTimeFormat("en-AU", {
+  timeZone: DISPLAY_TIME_ZONE,
+  timeZoneName: "short",
+});
+
+/** ISO文字列にタイムゾーンオフセット(Zまたは+HH:MM)が含まれているかどうか。 */
+function hasTimeZoneOffset(isoText: string): boolean {
+  return /[Zz]|[+-]\d{2}:?\d{2}$/.test(isoText);
+}
+
+/**
+ * Pythonが出力したISO形式の日時(UTC、オフセット無し)を、
+ * Australia/Sydneyのローカル時刻へ変換して読める形にする。
  *
- * タイムゾーン変換は意図的に行いません。Python側が記録した時刻と
- * 画面の表示を必ず一致させるためです。
+ * 例: "2026-09-04T22:01:52" -> "2026-09-05 08:01:52 AEST"
+ *
+ * Python側のcollected_atはオフセット無しのISO文字列(内部はUTCで統一)なので、
+ * 明示的にUTCとして解釈してから変換する。すでにオフセットが付与されている
+ * 文字列(将来Python側が変更された場合)はそのまま解釈する。
  */
 export function formatTimestamp(isoText: string): string {
-  return isoText.replace("T", " ");
+  const parsedDate = new Date(
+    hasTimeZoneOffset(isoText) ? isoText : `${isoText}Z`,
+  );
+
+  const dateTimeParts = displayDateTimeFormatter.formatToParts(parsedDate);
+  const getPart = (type: string): string =>
+    dateTimeParts.find((part) => part.type === type)?.value ?? "";
+
+  const datePart = `${getPart("year")}-${getPart("month")}-${getPart("day")}`;
+  const timePart = `${getPart("hour")}:${getPart("minute")}:${getPart("second")}`;
+
+  const zoneName =
+    displayTimeZoneNameFormatter
+      .formatToParts(parsedDate)
+      .find((part) => part.type === "timeZoneName")?.value ?? "";
+
+  return `${datePart} ${timePart} ${zoneName}`;
 }
 
 /** 3桁区切りの数値にする。例: 144316 -> "144,316" */
