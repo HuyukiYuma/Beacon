@@ -1,16 +1,21 @@
-"""Signal JSON・selection_reasons件数・AI observationsから、
-Daily Report全文（Markdown）を決定的に組み立てる。
+"""Daily Report v2をMarkdownとして決定的に組み立てる。
 
-このモジュールはAI・ネットワーク呼び出しを一切行わない。
-すべての関数は副作用のない純粋関数であり、同じ引数からは常に同じ
-Markdown文字列を返す。AI observationが欠けている候補には、
-Signal JSONの数値だけから機械的に組み立てたフォールバック文を使うため、
-AIが使えない場合でもこのモジュールだけでDaily Reportを完成できる。
+このモジュールはAI・ネットワーク呼び出しを一切行わない。すべての関数は
+副作用のない純粋関数であり、同じ引数からは常に同じMarkdown文字列を返す。
 
-見出し・URL・Star数・Hits数・selection_reasons・Notesは、すべて
-Signal JSONおよびPython側の集計値からここで直接生成する。AIが担当するのは
-各候補の「What changed」に入る短い観測文（observation）だけであり、
-それもフォールバック文で置き換え可能。
+Daily Report v2は「上: 人間が読むSummary層」「下: 検証可能なEvidence層」の
+二層構造。
+
+- Today's Picture / Notable Observed Changes / Broader Pattern / What to Watch:
+  AIが生成した説明文を使うが、AIが使えない場合はここで定義する決定論的な
+  フォールバック文だけでも成立する（Signal JSONとreport_facts.pyが計算した
+  factsだけから組み立てるため）。
+- Data Summary: 完全にPython生成（AIは一切関与しない）。
+- Candidate Evidence: v1と同じ構成（What changed / How large /
+  Persistent or temporary / Evidence）を維持する。
+
+「Notable」はAIの感覚では選ばない。report_facts.pyがstar_growthに基づいて
+決定論的に選んだ`facts["largest_growth_candidates"]`をそのまま使う。
 """
 
 
@@ -37,6 +42,14 @@ NOTES_TEXT = (
 )
 
 NO_CANDIDATES_TEXT = "今回の期間では、条件に該当する候補はありませんでした。"
+
+# Notable Observed Changesで、star_growthが正の候補が1件も無かった場合の文。
+NO_NOTABLE_CHANGES_TEXT = "今回の観測期間では、star_growthが正の値となった候補はありませんでした。"
+
+# Notable Observed Changesの各候補について、AI observationが無い場合に使う
+# 機械的なフォールバック文。report_facts.pyが選んだ候補は「星増加数が大きい」
+# という事実だけが確定しているため、それ以上の評価を含めない。
+NOTABLE_CHANGE_FALLBACK_TEXT = "今回の観測期間で、観測されたstar_growthの大きい変化の一つ。"
 
 
 def build_fallback_observation(candidate: dict) -> str:
@@ -112,7 +125,7 @@ def _format_evidence(candidate: dict) -> str:
 
 
 def build_candidate_block(candidate: dict, observation_text: str | None) -> str:
-    """候補1件分のMarkdownブロックを組み立てる。
+    """候補1件分のMarkdownブロックを組み立てる（Candidate Evidence用）。
 
     observation_textがNone・空文字の場合は、フォールバック文を使う。
     """
@@ -134,29 +147,144 @@ def build_candidate_block(candidate: dict, observation_text: str | None) -> str:
     )
 
 
-def build_summary_section(candidate_count: int, reason_counts: dict[str, int]) -> str:
-    """Summaryセクションの本文（見出しの中身）を組み立てる。"""
+def build_fallback_today_picture(facts: dict) -> str:
+    """AIが使えない場合の「Today's Picture」を、facts だけから機械的に組み立てる。
+
+    分類や評価は行わず、factsの数値をそのまま文章化するだけ。
+    """
+
+    sentences = [
+        f"今回の観測期間（約{facts['elapsed_hours']:.1f}時間）で、"
+        f"Signal Candidateは{facts['candidate_count']}件検出されました。",
+        f"新規Repositoryの出現は{facts['new_repository_count']}件でした。",
+    ]
+
+    largest_growth_candidates = facts["largest_growth_candidates"]
+
+    if largest_growth_candidates:
+        top = largest_growth_candidates[0]
+        sentences.append(
+            f"star_growthが最も大きかったのは{top['name']}"
+            f"（+{top['star_growth']}）でした。"
+        )
+
+        if len(largest_growth_candidates) > 1:
+            share_percent = round(facts["largest_two_share_of_total"] * 100)
+            sentences.append(
+                f"star_growthが正だった{facts['positive_star_growth_count']}件のうち、"
+                f"上位2件で全体の増加量の約{share_percent}%を占めています。"
+            )
+    else:
+        sentences.append("star_growthが正の値となった候補はありませんでした。")
+
+    return " ".join(sentences)
+
+
+def build_fallback_broader_pattern(facts: dict) -> str:
+    """AIが使えない場合の「Broader Pattern」を、facts だけから機械的に組み立てる。
+
+    「集中」「分散」などの分類ラベルは付けない。観測された数値のみを述べる。
+    """
+
+    sentences = [
+        f"検出された候補数は{facts['candidate_count']}件で、"
+        f"うちstar_growthが正だったのは{facts['positive_star_growth_count']}件でした。",
+        f"新規Repositoryとして検出されたのは{facts['new_repository_count']}件です。",
+        f"複数キーワードに一致した候補は{facts['multiple_keyword_match_count']}件でした。",
+    ]
+
+    if facts["total_positive_star_growth"] > 0:
+        share_percent = round(facts["largest_two_share_of_total"] * 100)
+        sentences.append(
+            f"star_growthが正の候補のうち、上位2件で全体の増加量の約{share_percent}%を"
+            f"占めています。"
+        )
+
+    return " ".join(sentences)
+
+
+def build_fallback_what_to_watch(facts: dict) -> list[str]:
+    """AIが使えない場合の「What to Watch」を、facts だけから機械的に組み立てる。
+
+    予測ではなく、次回Snapshotで比較すると意味がある観測点の列挙のみ。
+    """
+
+    items = [
+        f"{candidate['name']}のstar_growthが次回どう変化するか"
+        for candidate in facts["largest_growth_candidates"]
+    ]
+
+    if len(facts["largest_growth_candidates"]) >= 2:
+        items.append(
+            f"今回大きな増加が見られた{len(facts['largest_growth_candidates'])}件の"
+            f"Repository以外にも同様の変化が広がるか"
+        )
+
+    items.append("新規Repositoryが出現するか")
+    items.append("keyword coverageに変化があるか")
+
+    return items
+
+
+def build_notable_observed_changes_section(
+    facts: dict, notable_observations: dict[str, str]
+) -> str:
+    """Notable Observed Changesセクションの本文を組み立てる。
+
+    表示対象はreport_facts.pyがstar_growthに基づいて決定論的に選んだ
+    `facts["largest_growth_candidates"]`のみ。AIはここで選ばれた候補以外を
+    語ることも、選定基準を変えることもできない。
+    """
+
+    largest_growth_candidates = facts["largest_growth_candidates"]
+
+    if not largest_growth_candidates:
+        return NO_NOTABLE_CHANGES_TEXT
+
+    blocks = []
+
+    for candidate in largest_growth_candidates:
+        observation = notable_observations.get(candidate["name"]) or NOTABLE_CHANGE_FALLBACK_TEXT
+
+        blocks.append(
+            f"### {candidate['name']}\n"
+            f"\n"
+            f"Star growth: +{candidate['star_growth']}\n"
+            f"\n"
+            f"{observation}"
+        )
+
+    return "\n\n".join(blocks)
+
+
+def build_data_summary_section(facts: dict) -> str:
+    """Data Summaryセクションの本文を組み立てる。完全にPython生成。"""
 
     return (
-        f"- 検出された候補数: {candidate_count}\n"
-        f"- 新規Repository: {reason_counts['new_repository']}\n"
-        f"- キーワードヒット増加: {reason_counts['increased_keyword_hits']}\n"
-        f"- Star増加上位: {reason_counts['top_star_growth']}\n"
-        f"- 複数キーワード一致: {reason_counts['multiple_keyword_matches']}"
+        f"- Candidates: {facts['candidate_count']}\n"
+        f"- New repositories: {facts['new_repository_count']}\n"
+        f"- Tracked repositories: {facts['tracked_repository_count']}\n"
+        f"- Observation period: {facts['elapsed_hours']:.1f} hours"
     )
 
 
 def build_report_markdown(
     signal_json: dict,
-    reason_counts: dict[str, int],
-    observations: dict[str, str],
+    facts: dict,
+    ai_content: dict,
 ) -> str:
-    """Daily Report全文をMarkdownとして組み立てる。副作用のない純粋関数。
+    """Daily Report v2全文をMarkdownとして組み立てる。副作用のない純粋関数。
 
-    observationsは{候補name: observation文}の辞書。キーが存在しない、
-    または値が空の候補にはbuild_fallback_observationのフォールバック文を使う。
-    そのためobservationsが空辞書（AI呼び出しが完全に失敗した場合）でも、
-    このモジュールだけで完結したDaily Reportを生成できる。
+    ai_contentは以下のキーを持つ辞書（欠けているキーはフォールバックとして扱う）:
+
+    - observations: {候補name: observation文} （Candidate Evidence用、v1と同じ）
+    - today_picture: str | None
+    - broader_pattern: str | None
+    - what_to_watch: list[str]
+    - notable_observations: {候補name: observation文} （Notable Observed Changes用）
+
+    いずれのAI生成テキストが欠けていても、report_facts.pyが計算したfactsだけで
+    Daily Report全体を完成できる。
     """
 
     theme = signal_json["theme"]
@@ -170,9 +298,27 @@ def build_report_markdown(
     )
 
     if not candidates:
-        return f"{header}\n\n## Summary\n\n{NO_CANDIDATES_TEXT}\n"
+        return (
+            f"{header}\n"
+            f"\n"
+            f"## Data Summary\n"
+            f"\n"
+            f"{build_data_summary_section(facts)}\n"
+            f"\n"
+            f"## Notes\n"
+            f"\n"
+            f"{NO_CANDIDATES_TEXT}\n"
+            f"\n"
+            f"{NOTES_TEXT}\n"
+        )
 
-    summary_section = build_summary_section(len(candidates), reason_counts)
+    observations = ai_content.get("observations") or {}
+    today_picture = ai_content.get("today_picture") or build_fallback_today_picture(facts)
+    broader_pattern = ai_content.get("broader_pattern") or build_fallback_broader_pattern(facts)
+    what_to_watch = ai_content.get("what_to_watch") or build_fallback_what_to_watch(facts)
+    notable_observations = ai_content.get("notable_observations") or {}
+
+    what_to_watch_section = "\n".join(f"- {item}" for item in what_to_watch)
 
     candidate_blocks = "\n\n".join(
         build_candidate_block(candidate, observations.get(candidate["name"]))
@@ -182,11 +328,27 @@ def build_report_markdown(
     return (
         f"{header}\n"
         f"\n"
-        f"## Summary\n"
+        f"## Today's Picture\n"
         f"\n"
-        f"{summary_section}\n"
+        f"{today_picture}\n"
         f"\n"
-        f"## Candidates\n"
+        f"## Notable Observed Changes\n"
+        f"\n"
+        f"{build_notable_observed_changes_section(facts, notable_observations)}\n"
+        f"\n"
+        f"## Broader Pattern\n"
+        f"\n"
+        f"{broader_pattern}\n"
+        f"\n"
+        f"## What to Watch\n"
+        f"\n"
+        f"{what_to_watch_section}\n"
+        f"\n"
+        f"## Data Summary\n"
+        f"\n"
+        f"{build_data_summary_section(facts)}\n"
+        f"\n"
+        f"## Candidate Evidence\n"
         f"\n"
         f"{candidate_blocks}\n"
         f"\n"
