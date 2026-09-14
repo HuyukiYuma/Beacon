@@ -1,54 +1,39 @@
 {
   "theme": "AI Agent",
   "period": {
-    "previous": "2026-09-12T18:23:46",
-    "current": "2026-09-13T18:47:24",
-    "elapsed_seconds": 87818.0,
-    "elapsed_hours": 24.39388888888889
+    "previous": "2026-09-13T18:47:24",
+    "current": "2026-09-14T20:18:38",
+    "elapsed_seconds": 91874.0,
+    "elapsed_hours": 25.520555555555557
   },
   "candidates": [
     {
-      "name": "crewAIInc/crewAI",
-      "url": "https://github.com/crewAIInc/crewAI",
-      "previous_stars": 58409,
-      "current_stars": 58462,
-      "star_growth": 53,
+      "name": "ruvnet/ruflo",
+      "url": "https://github.com/ruvnet/ruflo",
+      "previous_stars": 72304,
+      "current_stars": 72429,
+      "star_growth": 125,
       "previous_hits": 2,
       "current_hits": 2,
       "hit_change": 0,
       "is_new": false,
-      "star_growth_per_hour": 2.1726753057459747,
+      "star_growth_per_hour": 4.898012495374099,
       "selection_reasons": [
         "top_star_growth",
         "multiple_keyword_matches"
       ]
     },
     {
-      "name": "msitarzewski/agency-agents",
-      "url": "https://github.com/msitarzewski/agency-agents",
-      "previous_stars": 151885,
-      "current_stars": 152094,
-      "star_growth": 209,
+      "name": "langchain-ai/langchain",
+      "url": "https://github.com/langchain-ai/langchain",
+      "previous_stars": 146232,
+      "current_stars": 146323,
+      "star_growth": 91,
       "previous_hits": 1,
       "current_hits": 1,
       "hit_change": 0,
       "is_new": false,
-      "star_growth_per_hour": 8.567719601903939,
-      "selection_reasons": [
-        "top_star_growth"
-      ]
-    },
-    {
-      "name": "NousResearch/hermes-agent",
-      "url": "https://github.com/NousResearch/hermes-agent",
-      "previous_stars": 244849,
-      "current_stars": 245116,
-      "star_growth": 267,
-      "previous_hits": 1,
-      "current_hits": 1,
-      "hit_change": 0,
-      "is_new": false,
-      "star_growth_per_hour": 10.945364276116514,
+      "star_growth_per_hour": 3.5657530966323443,
       "selection_reasons": [
         "top_star_growth"
       ]
@@ -56,108 +41,123 @@
     {
       "name": "cline/cline",
       "url": "https://github.com/cline/cline",
-      "previous_stars": 67888,
-      "current_stars": 67938,
-      "star_growth": 50,
+      "previous_stars": 67938,
+      "current_stars": 67999,
+      "star_growth": 61,
       "previous_hits": 1,
       "current_hits": 1,
       "hit_change": 0,
       "is_new": false,
-      "star_growth_per_hour": 2.0496936846660136,
+      "star_growth_per_hour": 2.39023009774256,
       "selection_reasons": [
         "top_star_growth"
-      ]
-    },
-    {
-      "name": "CherryHQ/cherry-studio",
-      "url": "https://github.com/CherryHQ/cherry-studio",
-      "previous_stars": 51728,
-      "current_stars": 51755,
-      "star_growth": 27,
-      "previous_hits": 1,
-      "current_hits": 1,
-      "hit_change": 0,
-      "is_new": false,
-      "star_growth_per_hour": 1.1068345897196474,
-      "selection_reasons": [
-        "top_star_growth"
-      ]
-    },
-    {
-      "name": "langchain-ai/langchain",
-      "url": "https://github.com/langchain-ai/langchain",
-      "previous_stars": 146189,
-      "current_stars": 146232,
-      "star_growth": 43,
-      "previous_hits": 1,
-      "current_hits": 1,
-      "hit_change": 0,
-      "is_new": false,
-      "star_growth_per_hour": 1.7627365688127719,
-      "selection_reasons": [
-        "top_star_growth"
-      ]
-    },
-    {
-      "name": "ruvnet/ruflo",
-      "url": "https://github.com/ruvnet/ruflo",
-      "previous_stars": 72217,
-      "current_stars": 72304,
-      "star_growth": 87,
-      "previous_hits": 2,
-      "current_hits": 2,
-      "hit_change": 0,
-      "is_new": false,
-      "star_growth_per_hour": 3.566467011318864,
-      "selection_reasons": [
-        "top_star_growth",
-        "multiple_keyword_matches"
-      ]
-    },
-    {
-      "name": "obra/superpowers",
-      "url": "https://github.com/obra/superpowers",
-      "previous_stars": 285719,
-      "current_stars": 286120,
-      "star_growth": 401,
-      "previous_hits": 2,
-      "current_hits": 2,
-      "hit_change": 0,
-      "is_new": false,
-      "star_growth_per_hour": 16.43854335102143,
-      "selection_reasons": [
-        "top_star_growth",
-        "multiple_keyword_matches"
       ]
     },
     {
       "name": "langgenius/dify",
       "url": "https://github.com/langgenius/dify",
-      "previous_stars": 155524,
-      "current_stars": 155600,
-      "star_growth": 76,
+      "previous_stars": 155600,
+      "current_stars": 155713,
+      "star_growth": 113,
       "previous_hits": 1,
       "current_hits": 1,
       "hit_change": 0,
       "is_new": false,
-      "star_growth_per_hour": 3.115534400692341,
+      "star_growth_per_hour": 4.427803295818186,
       "selection_reasons": [
         "top_star_growth"
       ]
     },
     {
-      "name": "langflow-ai/langflow",
-      "url": "https://github.com/langflow-ai/langflow",
-      "previous_stars": 154657,
-      "current_stars": 154722,
-      "star_growth": 65,
+      "name": "NousResearch/hermes-agent",
+      "url": "https://github.com/NousResearch/hermes-agent",
+      "previous_stars": 245116,
+      "current_stars": 245450,
+      "star_growth": 334,
       "previous_hits": 1,
       "current_hits": 1,
       "hit_change": 0,
       "is_new": false,
-      "star_growth_per_hour": 2.664601790065818,
+      "star_growth_per_hour": 13.087489387639593,
       "selection_reasons": [
         "top_star_growth"
+      ]
+    },
+    {
+      "name": "msitarzewski/agency-agents",
+      "url": "https://github.com/msitarzewski/agency-agents",
+      "previous_stars": 152094,
+      "current_stars": 152296,
+      "star_growth": 202,
+      "previous_hits": 1,
+      "current_hits": 1,
+      "hit_change": 0,
+      "is_new": false,
+      "star_growth_per_hour": 7.915188192524544,
+      "selection_reasons": [
+        "top_star_growth"
+      ]
+    },
+    {
+      "name": "FoundationAgents/MetaGPT",
+      "url": "https://github.com/FoundationAgents/MetaGPT",
+      "previous_stars": 70351,
+      "current_stars": 70386,
+      "star_growth": 35,
+      "previous_hits": 1,
+      "current_hits": 1,
+      "hit_change": 0,
+      "is_new": false,
+      "star_growth_per_hour": 1.3714434987047477,
+      "selection_reasons": [
+        "top_star_growth"
+      ]
+    },
+    {
+      "name": "obra/superpowers",
+      "url": "https://github.com/obra/superpowers",
+      "previous_stars": 286120,
+      "current_stars": 286618,
+      "star_growth": 498,
+      "previous_hits": 2,
+      "current_hits": 2,
+      "hit_change": 0,
+      "is_new": false,
+      "star_growth_per_hour": 19.513681781570412,
+      "selection_reasons": [
+        "top_star_growth",
+        "multiple_keyword_matches"
+      ]
+    },
+    {
+      "name": "langflow-ai/langflow",
+      "url": "https://github.com/langflow-ai/langflow",
+      "previous_stars": 154722,
+      "current_stars": 154802,
+      "star_growth": 80,
+      "previous_hits": 1,
+      "current_hits": 1,
+      "hit_change": 0,
+      "is_new": false,
+      "star_growth_per_hour": 3.1347279970394233,
+      "selection_reasons": [
+        "top_star_growth"
+      ]
+    },
+    {
+      "name": "crewAIInc/crewAI",
+      "url": "https://github.com/crewAIInc/crewAI",
+      "previous_stars": 58462,
+      "current_stars": 58542,
+      "star_growth": 80,
+      "previous_hits": 2,
+      "current_hits": 2,
+      "hit_change": 0,
+      "is_new": false,
+      "star_growth_per_hour": 3.1347279970394233,
+      "selection_reasons": [
+        "top_star_growth",
+        "multiple_keyword_matches"
       ]
     }
   ]
