@@ -1,50 +1,50 @@
 # Beacon Daily Report - AI Agent
 
-比較期間: 2026-09-29T20:47:08 〜 2026-09-30T20:49:08
+比較期間: 2026-09-30T20:49:08 〜 2026-10-01T21:01:58
 
 ## Today's Picture
 
-今回の観測期間（約24.0時間）で、Signal Candidateは11件検出されました。 新規Repositoryの出現は1件でした。 star_growthが最も大きかったのはmsitarzewski/agency-agents（+155503）でした。 star_growthが正だった11件のうち、上位2件で全体の増加量の約99%を占めています。
+今回の観測期間（約24.2時間）で、Signal Candidateは10件検出されました。 新規Repositoryの出現は0件でした。 star_growthが最も大きかったのはobra/superpowers（+472）でした。 star_growthが正だった10件のうち、上位2件で全体の増加量の約57%を占めています。
 
 ## Notable Observed Changes
 
-### msitarzewski/agency-agents
-
-Star growth: +155503
-
-今回の観測期間で、観測されたstar_growthの大きい変化の一つ。
-
 ### obra/superpowers
 
-Star growth: +524
+Star growth: +472
 
 今回の観測期間で、観測されたstar_growthの大きい変化の一つ。
 
 ### firecrawl/firecrawl
 
-Star growth: +523
+Star growth: +451
+
+今回の観測期間で、観測されたstar_growthの大きい変化の一つ。
+
+### NousResearch/hermes-agent
+
+Star growth: +263
 
 今回の観測期間で、観測されたstar_growthの大きい変化の一つ。
 
 ## Broader Pattern
 
-検出された候補数は11件で、うちstar_growthが正だったのは11件でした。 新規Repositoryとして検出されたのは1件です。 複数キーワードに一致した候補は3件でした。 star_growthが正の候補のうち、上位2件で全体の増加量の約99%を占めています。
+検出された候補数は10件で、うちstar_growthが正だったのは10件でした。 新規Repositoryとして検出されたのは0件です。 複数キーワードに一致した候補は3件でした。 star_growthが正の候補のうち、上位2件で全体の増加量の約57%を占めています。
 
 ## What to Watch
 
-- msitarzewski/agency-agentsのstar_growthが次回どう変化するか
 - obra/superpowersのstar_growthが次回どう変化するか
 - firecrawl/firecrawlのstar_growthが次回どう変化するか
+- NousResearch/hermes-agentのstar_growthが次回どう変化するか
 - 今回大きな増加が見られた3件のRepository以外にも同様の変化が広がるか
 - 新規Repositoryが出現するか
 - keyword coverageに変化があるか
 
 ## Data Summary
 
-- Candidates: 11
-- New repositories: 1
+- Candidates: 10
+- New repositories: 0
 - Tracked repositories: 22
-- Observation period: 24.0 hours
+- Observation period: 24.2 hours
 
 ## Candidate Evidence
 
@@ -52,35 +52,35 @@ Star growth: +523
 
 - URL: https://github.com/firecrawl/firecrawl
 - What changed:
-  Star数が増加しました（star_growth: 523）。
+  Star数が増加しました（star_growth: 451）。
 - How large:
-  186586 → 187109（523）
+  187109 → 187560（451）
   1 → 1（0）
 - Persistent or temporary:
   今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
 - Evidence:
   - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
 
-### strands-agents/harness-sdk
+### vercel/ai
 
-- URL: https://github.com/strands-agents/harness-sdk
+- URL: https://github.com/vercel/ai
 - What changed:
-  Star数が増加しました（star_growth: 25）。
+  Star数が増加しました（star_growth: 23）。
 - How large:
-  8562 → 8587（25）
+  27056 → 27079（23）
   1 → 1（0）
 - Persistent or temporary:
   今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
 - Evidence:
   - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
 
-### CherryHQ/cherry-studio
+### msitarzewski/agency-agents
 
-- URL: https://github.com/CherryHQ/cherry-studio
+- URL: https://github.com/msitarzewski/agency-agents
 - What changed:
-  Star数が増加しました（star_growth: 40）。
+  Star数が増加しました（star_growth: 118）。
 - How large:
-  52246 → 52286（40）
+  155503 → 155621（118）
   1 → 1（0）
 - Persistent or temporary:
   今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
@@ -91,23 +91,9 @@ Star growth: +523
 
 - URL: https://github.com/ruvnet/ruflo
 - What changed:
-  Star数が増加しました（star_growth: 63）。
+  Star数が増加しました（star_growth: 80）。
 - How large:
-  73514 → 73577（63）
-  2 → 2（0）
-- Persistent or temporary:
-  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
-- Evidence:
-  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
-  - multiple_keyword_matches: 現在2件以上のキーワードにヒットしている
-
-### obra/superpowers
-
-- URL: https://github.com/obra/superpowers
-- What changed:
-  Star数が増加しました（star_growth: 524）。
-- How large:
-  292907 → 293431（524）
+  73577 → 73657（80）
   2 → 2（0）
 - Persistent or temporary:
   今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
@@ -119,35 +105,9 @@ Star growth: +523
 
 - URL: https://github.com/langgenius/dify
 - What changed:
-  Star数が増加しました（star_growth: 92）。
+  Star数が増加しました（star_growth: 75）。
 - How large:
-  157519 → 157611（92）
-  1 → 1（0）
-- Persistent or temporary:
-  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
-- Evidence:
-  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
-
-### cline/cline
-
-- URL: https://github.com/cline/cline
-- What changed:
-  Star数が増加しました（star_growth: 51）。
-- How large:
-  69568 → 69619（51）
-  1 → 1（0）
-- Persistent or temporary:
-  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
-- Evidence:
-  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
-
-### langchain-ai/langchain
-
-- URL: https://github.com/langchain-ai/langchain
-- What changed:
-  Star数が増加しました（star_growth: 52）。
-- How large:
-  147274 → 147326（52）
+  157611 → 157686（75）
   1 → 1（0）
 - Persistent or temporary:
   今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
@@ -158,42 +118,68 @@ Star growth: +523
 
 - URL: https://github.com/NousResearch/hermes-agent
 - What changed:
-  Star数が増加しました（star_growth: 276）。
+  Star数が増加しました（star_growth: 263）。
 - How large:
-  250041 → 250317（276）
+  250317 → 250580（263）
   1 → 1（0）
 - Persistent or temporary:
   今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
 - Evidence:
   - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
 
-### msitarzewski/agency-agents
+### obra/superpowers
 
-- URL: https://github.com/msitarzewski/agency-agents
+- URL: https://github.com/obra/superpowers
 - What changed:
-  新規Repositoryとして検出されました（現在のStar数: 155503）。
+  Star数が増加しました（star_growth: 472）。
 - How large:
-  新規検出のため、増加量ではなく総Star数として記録: 155503
-  0 → 1（1）
-- Persistent or temporary:
-  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
-- Evidence:
-  - new_repository: 前回Snapshotに存在しなかった（今回初めて検出された）
-  - increased_keyword_hits: ヒットしたキーワード数が増加した
-
-### crewAIInc/crewAI
-
-- URL: https://github.com/crewAIInc/crewAI
-- What changed:
-  Star数が増加しました（star_growth: 41）。
-- How large:
-  59192 → 59233（41）
+  293431 → 293903（472）
   2 → 2（0）
 - Persistent or temporary:
   今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
 - Evidence:
   - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
   - multiple_keyword_matches: 現在2件以上のキーワードにヒットしている
+
+### crewAIInc/crewAI
+
+- URL: https://github.com/crewAIInc/crewAI
+- What changed:
+  Star数が増加しました（star_growth: 36）。
+- How large:
+  59233 → 59269（36）
+  2 → 2（0）
+- Persistent or temporary:
+  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
+- Evidence:
+  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
+  - multiple_keyword_matches: 現在2件以上のキーワードにヒットしている
+
+### cline/cline
+
+- URL: https://github.com/cline/cline
+- What changed:
+  Star数が増加しました（star_growth: 54）。
+- How large:
+  69619 → 69673（54）
+  1 → 1（0）
+- Persistent or temporary:
+  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
+- Evidence:
+  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
+
+### langchain-ai/langchain
+
+- URL: https://github.com/langchain-ai/langchain
+- What changed:
+  Star数が増加しました（star_growth: 39）。
+- How large:
+  147326 → 147365（39）
+  1 → 1（0）
+- Persistent or temporary:
+  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
+- Evidence:
+  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
 
 ## Notes
 
