@@ -1,34 +1,34 @@
 # Beacon Daily Report - AI Agent
 
-比較期間: 2026-10-04T18:38:33 〜 2026-10-05T22:01:04
+比較期間: 2026-10-05T22:01:04 〜 2026-10-06T20:20:03
 
 ## Today's Picture
 
-今回の観測期間（約27.4時間）で、Signal Candidateは10件検出されました。 新規Repositoryの出現は0件でした。 star_growthが最も大きかったのはmsitarzewski/agency-agents（+731）でした。 star_growthが正だった10件のうち、上位2件で全体の増加量の約56%を占めています。
+今回の観測期間（約22.3時間）で、Signal Candidateは10件検出されました。 新規Repositoryの出現は0件でした。 star_growthが最も大きかったのはmsitarzewski/agency-agents（+523）でした。 star_growthが正だった10件のうち、上位2件で全体の増加量の約54%を占めています。
 
 ## Notable Observed Changes
 
 ### msitarzewski/agency-agents
 
-Star growth: +731
+Star growth: +523
 
 今回の観測期間で、観測されたstar_growthの大きい変化の一つ。
 
 ### obra/superpowers
 
-Star growth: +412
+Star growth: +345
 
 今回の観測期間で、観測されたstar_growthの大きい変化の一つ。
 
 ### firecrawl/firecrawl
 
-Star growth: +344
+Star growth: +258
 
 今回の観測期間で、観測されたstar_growthの大きい変化の一つ。
 
 ## Broader Pattern
 
-検出された候補数は10件で、うちstar_growthが正だったのは10件でした。 新規Repositoryとして検出されたのは0件です。 複数キーワードに一致した候補は3件でした。 star_growthが正の候補のうち、上位2件で全体の増加量の約56%を占めています。
+検出された候補数は10件で、うちstar_growthが正だったのは10件でした。 新規Repositoryとして検出されたのは0件です。 複数キーワードに一致した候補は3件でした。 star_growthが正の候補のうち、上位2件で全体の増加量の約54%を占めています。
 
 ## What to Watch
 
@@ -44,7 +44,7 @@ Star growth: +344
 - Candidates: 10
 - New repositories: 0
 - Tracked repositories: 22
-- Observation period: 27.4 hours
+- Observation period: 22.3 hours
 
 ## Candidate Evidence
 
@@ -52,9 +52,22 @@ Star growth: +344
 
 - URL: https://github.com/langchain-ai/langchain
 - What changed:
-  Star数が増加しました（star_growth: 36）。
+  Star数が増加しました（star_growth: 23）。
 - How large:
-  147438 → 147474（36）
+  147474 → 147497（23）
+  1 → 1（0）
+- Persistent or temporary:
+  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
+- Evidence:
+  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
+
+### langgenius/dify
+
+- URL: https://github.com/langgenius/dify
+- What changed:
+  Star数が増加しました（star_growth: 61）。
+- How large:
+  157900 → 157961（61）
   1 → 1（0）
 - Persistent or temporary:
   今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
@@ -65,9 +78,9 @@ Star growth: +344
 
 - URL: https://github.com/ruvnet/ruflo
 - What changed:
-  Star数が増加しました（star_growth: 84）。
+  Star数が増加しました（star_growth: 67）。
 - How large:
-  73849 → 73933（84）
+  73933 → 74000（67）
   2 → 2（0）
 - Persistent or temporary:
   今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
@@ -75,26 +88,13 @@ Star growth: +344
   - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
   - multiple_keyword_matches: 現在2件以上のキーワードにヒットしている
 
-### cline/cline
-
-- URL: https://github.com/cline/cline
-- What changed:
-  Star数が増加しました（star_growth: 52）。
-- How large:
-  69840 → 69892（52）
-  1 → 1（0）
-- Persistent or temporary:
-  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
-- Evidence:
-  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
-
 ### NousResearch/hermes-agent
 
 - URL: https://github.com/NousResearch/hermes-agent
 - What changed:
-  Star数が増加しました（star_growth: 260）。
+  Star数が増加しました（star_growth: 237）。
 - How large:
-  251168 → 251428（260）
+  251428 → 251665（237）
   1 → 1（0）
 - Persistent or temporary:
   今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
@@ -105,9 +105,9 @@ Star growth: +344
 
 - URL: https://github.com/obra/superpowers
 - What changed:
-  Star数が増加しました（star_growth: 412）。
+  Star数が増加しました（star_growth: 345）。
 - How large:
-  295219 → 295631（412）
+  295631 → 295976（345）
   2 → 2（0）
 - Persistent or temporary:
   今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
@@ -119,9 +119,35 @@ Star growth: +344
 
 - URL: https://github.com/msitarzewski/agency-agents
 - What changed:
-  Star数が増加しました（star_growth: 731）。
+  Star数が増加しました（star_growth: 523）。
 - How large:
-  156474 → 157205（731）
+  157205 → 157728（523）
+  1 → 1（0）
+- Persistent or temporary:
+  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
+- Evidence:
+  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
+
+### vercel/ai
+
+- URL: https://github.com/vercel/ai
+- What changed:
+  Star数が増加しました（star_growth: 22）。
+- How large:
+  27127 → 27149（22）
+  1 → 1（0）
+- Persistent or temporary:
+  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
+- Evidence:
+  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
+
+### cline/cline
+
+- URL: https://github.com/cline/cline
+- What changed:
+  Star数が増加しました（star_growth: 51）。
+- How large:
+  69892 → 69943（51）
   1 → 1（0）
 - Persistent or temporary:
   今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
@@ -132,9 +158,9 @@ Star growth: +344
 
 - URL: https://github.com/firecrawl/firecrawl
 - What changed:
-  Star数が増加しました（star_growth: 344）。
+  Star数が増加しました（star_growth: 258）。
 - How large:
-  188545 → 188889（344）
+  188889 → 189147（258）
   1 → 1（0）
 - Persistent or temporary:
   今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
@@ -145,41 +171,15 @@ Star growth: +344
 
 - URL: https://github.com/crewAIInc/crewAI
 - What changed:
-  Star数が増加しました（star_growth: 30）。
+  Star数が増加しました（star_growth: 24）。
 - How large:
-  59344 → 59374（30）
+  59374 → 59398（24）
   2 → 2（0）
 - Persistent or temporary:
   今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
 - Evidence:
   - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
   - multiple_keyword_matches: 現在2件以上のキーワードにヒットしている
-
-### langgenius/dify
-
-- URL: https://github.com/langgenius/dify
-- What changed:
-  Star数が増加しました（star_growth: 58）。
-- How large:
-  157842 → 157900（58）
-  1 → 1（0）
-- Persistent or temporary:
-  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
-- Evidence:
-  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
-
-### strands-agents/harness-sdk
-
-- URL: https://github.com/strands-agents/harness-sdk
-- What changed:
-  Star数が増加しました（star_growth: 19）。
-- How large:
-  8656 → 8675（19）
-  1 → 1（0）
-- Persistent or temporary:
-  今回は前回・今回の2時点比較のみに基づく単発の観測結果です。継続的な傾向であるかどうかは、複数回のSnapshot比較が蓄積された段階で判断します。
-- Evidence:
-  - top_star_growth: 新規Repositoryを除いたStar増加数の上位10件に入った
 
 ## Notes
 
