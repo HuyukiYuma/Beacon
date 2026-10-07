@@ -1,5 +1,10 @@
 [
   {
+    "file_name": "github_AI_Agent_2026-10-07_203754.json",
+    "collected_at": "2026-10-07T20:37:54",
+    "repository_count": 22
+  },
+  {
     "file_name": "github_AI_Agent_2026-10-06_202003.json",
     "collected_at": "2026-10-06T20:20:03",
     "repository_count": 22
@@ -17,11 +22,6 @@
   {
     "file_name": "github_AI_Agent_2026-10-02_204453.json",
     "collected_at": "2026-10-02T20:44:53",
-    "repository_count": 22
-  },
-  {
-    "file_name": "github_AI_Agent_2026-10-01_210158.json",
-    "collected_at": "2026-10-01T21:01:58",
     "repository_count": 22
   }
 ]
