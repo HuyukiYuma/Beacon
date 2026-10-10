@@ -1,113 +1,113 @@
 {
   "theme": "AI Agent",
-  "collected_at": "2026-10-09T20:06:39",
+  "collected_at": "2026-10-10T19:16:48",
   "repositories": [
     {
       "name": "obra/superpowers",
       "hits": 2,
-      "stars": 296847,
+      "stars": 297174,
       "url": "https://github.com/obra/superpowers"
     },
     {
       "name": "ruvnet/ruflo",
       "hits": 2,
-      "stars": 74191,
+      "stars": 74268,
       "url": "https://github.com/ruvnet/ruflo"
     },
     {
       "name": "NousResearch/hermes-agent",
       "hits": 1,
-      "stars": 252240,
+      "stars": 252494,
       "url": "https://github.com/NousResearch/hermes-agent"
     },
     {
       "name": "firecrawl/firecrawl",
       "hits": 1,
-      "stars": 189888,
+      "stars": 190181,
       "url": "https://github.com/firecrawl/firecrawl"
     },
     {
       "name": "DietrichGebert/ponytail",
       "hits": 1,
-      "stars": 159488,
+      "stars": 160317,
       "url": "https://github.com/DietrichGebert/ponytail"
     },
     {
       "name": "msitarzewski/agency-agents",
       "hits": 1,
-      "stars": 158493,
+      "stars": 158711,
       "url": "https://github.com/msitarzewski/agency-agents"
     },
     {
       "name": "langchain-ai/langchain",
       "hits": 1,
-      "stars": 147477,
+      "stars": 147559,
       "url": "https://github.com/langchain-ai/langchain"
     },
     {
       "name": "FoundationAgents/MetaGPT",
       "hits": 1,
-      "stars": 70782,
+      "stars": 70792,
       "url": "https://github.com/FoundationAgents/MetaGPT"
     },
     {
       "name": "cline/cline",
       "hits": 1,
-      "stars": 70074,
+      "stars": 70118,
       "url": "https://github.com/cline/cline"
     },
     {
       "name": "microsoft/autogen",
       "hits": 1,
-      "stars": 61329,
+      "stars": 61342,
       "url": "https://github.com/microsoft/autogen"
     },
     {
       "name": "heygen-com/hyperframes",
       "hits": 1,
-      "stars": 59709,
+      "stars": 60278,
       "url": "https://github.com/heygen-com/hyperframes"
     },
     {
       "name": "crewAIInc/crewAI",
       "hits": 1,
-      "stars": 59507,
+      "stars": 59533,
       "url": "https://github.com/crewAIInc/crewAI"
     },
     {
       "name": "CherryHQ/cherry-studio",
       "hits": 1,
-      "stars": 52492,
+      "stars": 52522,
       "url": "https://github.com/CherryHQ/cherry-studio"
     },
     {
       "name": "khoj-ai/khoj",
       "hits": 1,
-      "stars": 37609,
+      "stars": 37623,
       "url": "https://github.com/khoj-ai/khoj"
     },
     {
       "name": "vercel/ai",
       "hits": 1,
-      "stars": 27210,
+      "stars": 27228,
       "url": "https://github.com/vercel/ai"
     },
     {
       "name": "NirDiamant/GenAI_Agents",
       "hits": 1,
-      "stars": 24505,
+      "stars": 24520,
       "url": "https://github.com/NirDiamant/GenAI_Agents"
     },
     {
       "name": "muratcankoylan/Agent-Skills-for-Context-Engineering",
       "hits": 1,
-      "stars": 18094,
+      "stars": 18101,
       "url": "https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering"
     },
     {
       "name": "cft0808/edict",
       "hits": 1,
-      "stars": 16979,
+      "stars": 16987,
       "url": "https://github.com/cft0808/edict"
     },
     {
@@ -119,7 +119,7 @@
     {
       "name": "strands-agents/harness-sdk",
       "hits": 1,
-      "stars": 8749,
+      "stars": 8757,
       "url": "https://github.com/strands-agents/harness-sdk"
     },
     {
@@ -131,13 +131,13 @@
     {
       "name": "AgentOps-AI/agentops",
       "hits": 1,
-      "stars": 5885,
+      "stars": 5884,
       "url": "https://github.com/AgentOps-AI/agentops"
     },
     {
       "name": "looplj/axonhub",
       "hits": 1,
-      "stars": 5347,
+      "stars": 5346,
       "url": "https://github.com/looplj/axonhub"
     }
   ]
