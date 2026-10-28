@@ -1,99 +1,23 @@
 {
   "theme": "AI Agent",
   "period": {
-    "previous": "2026-10-26T20:28:51",
-    "current": "2026-10-27T20:05:35",
-    "elapsed_seconds": 85004.0,
-    "elapsed_hours": 23.612222222222222
+    "previous": "2026-10-27T20:05:35",
+    "current": "2026-10-28T20:16:16",
+    "elapsed_seconds": 87041.0,
+    "elapsed_hours": 24.178055555555556
   },
   "candidates": [
     {
       "name": "DietrichGebert/ponytail",
       "url": "https://github.com/DietrichGebert/ponytail",
-      "previous_stars": 177005,
-      "current_stars": 178032,
-      "star_growth": 1027,
+      "previous_stars": 178032,
+      "current_stars": 179034,
+      "star_growth": 1002,
       "previous_hits": 1,
       "current_hits": 1,
       "hit_change": 0,
       "is_new": false,
-      "star_growth_per_hour": 43.49442379182156,
-      "selection_reasons": [
-        "top_star_growth"
-      ]
-    },
-    {
-      "name": "msitarzewski/agency-agents",
-      "url": "https://github.com/msitarzewski/agency-agents",
-      "previous_stars": 164224,
-      "current_stars": 164496,
-      "star_growth": 272,
-      "previous_hits": 1,
-      "current_hits": 1,
-      "hit_change": 0,
-      "is_new": false,
-      "star_growth_per_hour": 11.51945790786316,
-      "selection_reasons": [
-        "top_star_growth"
-      ]
-    },
-    {
-      "name": "obra/superpowers",
-      "url": "https://github.com/obra/superpowers",
-      "previous_stars": 305539,
-      "current_stars": 306292,
-      "star_growth": 753,
-      "previous_hits": 2,
-      "current_hits": 2,
-      "hit_change": 0,
-      "is_new": false,
-      "star_growth_per_hour": 31.890263987577054,
-      "selection_reasons": [
-        "top_star_growth",
-        "multiple_keyword_matches"
-      ]
-    },
-    {
-      "name": "langchain-ai/langchain",
-      "url": "https://github.com/langchain-ai/langchain",
-      "previous_stars": 148507,
-      "current_stars": 148558,
-      "star_growth": 51,
-      "previous_hits": 1,
-      "current_hits": 1,
-      "hit_change": 0,
-      "is_new": false,
-      "star_growth_per_hour": 2.1598983577243422,
-      "selection_reasons": [
-        "top_star_growth"
-      ]
-    },
-    {
-      "name": "heygen-com/hyperframes",
-      "url": "https://github.com/heygen-com/hyperframes",
-      "previous_stars": 72941,
-      "current_stars": 73819,
-      "star_growth": 878,
-      "previous_hits": 1,
-      "current_hits": 1,
-      "hit_change": 0,
-      "is_new": false,
-      "star_growth_per_hour": 37.18413251141123,
-      "selection_reasons": [
-        "top_star_growth"
-      ]
-    },
-    {
-      "name": "firecrawl/firecrawl",
-      "url": "https://github.com/firecrawl/firecrawl",
-      "previous_stars": 195643,
-      "current_stars": 196015,
-      "star_growth": 372,
-      "previous_hits": 1,
-      "current_hits": 1,
-      "hit_change": 0,
-      "is_new": false,
-      "star_growth_per_hour": 15.754552726930498,
+      "star_growth_per_hour": 41.44253857377558,
       "selection_reasons": [
         "top_star_growth"
       ]
@@ -101,14 +25,90 @@
     {
       "name": "ruvnet/ruflo",
       "url": "https://github.com/ruvnet/ruflo",
-      "previous_stars": 79491,
-      "current_stars": 79741,
-      "star_growth": 250,
+      "previous_stars": 79741,
+      "current_stars": 79944,
+      "star_growth": 203,
       "previous_hits": 2,
       "current_hits": 2,
       "hit_change": 0,
       "is_new": false,
-      "star_growth_per_hour": 10.587737047668345,
+      "star_growth_per_hour": 8.396043243988466,
+      "selection_reasons": [
+        "top_star_growth",
+        "multiple_keyword_matches"
+      ]
+    },
+    {
+      "name": "firecrawl/firecrawl",
+      "url": "https://github.com/firecrawl/firecrawl",
+      "previous_stars": 196015,
+      "current_stars": 196372,
+      "star_growth": 357,
+      "previous_hits": 1,
+      "current_hits": 1,
+      "hit_change": 0,
+      "is_new": false,
+      "star_growth_per_hour": 14.765455360117645,
+      "selection_reasons": [
+        "top_star_growth"
+      ]
+    },
+    {
+      "name": "cline/cline",
+      "url": "https://github.com/cline/cline",
+      "previous_stars": 70924,
+      "current_stars": 70986,
+      "star_growth": 62,
+      "previous_hits": 1,
+      "current_hits": 1,
+      "hit_change": 0,
+      "is_new": false,
+      "star_growth_per_hour": 2.5643087740260335,
+      "selection_reasons": [
+        "top_star_growth"
+      ]
+    },
+    {
+      "name": "heygen-com/hyperframes",
+      "url": "https://github.com/heygen-com/hyperframes",
+      "previous_stars": 73819,
+      "current_stars": 74622,
+      "star_growth": 803,
+      "previous_hits": 1,
+      "current_hits": 1,
+      "hit_change": 0,
+      "is_new": false,
+      "star_growth_per_hour": 33.21193460553073,
+      "selection_reasons": [
+        "top_star_growth"
+      ]
+    },
+    {
+      "name": "msitarzewski/agency-agents",
+      "url": "https://github.com/msitarzewski/agency-agents",
+      "previous_stars": 164496,
+      "current_stars": 164840,
+      "star_growth": 344,
+      "previous_hits": 1,
+      "current_hits": 1,
+      "hit_change": 0,
+      "is_new": false,
+      "star_growth_per_hour": 14.227777713950896,
+      "selection_reasons": [
+        "top_star_growth"
+      ]
+    },
+    {
+      "name": "obra/superpowers",
+      "url": "https://github.com/obra/superpowers",
+      "previous_stars": 306292,
+      "current_stars": 307316,
+      "star_growth": 1024,
+      "previous_hits": 2,
+      "current_hits": 2,
+      "hit_change": 0,
+      "is_new": false,
+      "star_growth_per_hour": 42.35245459036546,
       "selection_reasons": [
         "top_star_growth",
         "multiple_keyword_matches"
@@ -117,29 +117,29 @@
     {
       "name": "NousResearch/hermes-agent",
       "url": "https://github.com/NousResearch/hermes-agent",
-      "previous_stars": 257365,
-      "current_stars": 257705,
-      "star_growth": 340,
+      "previous_stars": 257705,
+      "current_stars": 258039,
+      "star_growth": 334,
       "previous_hits": 1,
       "current_hits": 1,
       "hit_change": 0,
       "is_new": false,
-      "star_growth_per_hour": 14.399322384828949,
+      "star_growth_per_hour": 13.814179524591859,
       "selection_reasons": [
         "top_star_growth"
       ]
     },
     {
-      "name": "cline/cline",
-      "url": "https://github.com/cline/cline",
-      "previous_stars": 70892,
-      "current_stars": 70924,
-      "star_growth": 32,
+      "name": "langchain-ai/langchain",
+      "url": "https://github.com/langchain-ai/langchain",
+      "previous_stars": 148558,
+      "current_stars": 148625,
+      "star_growth": 67,
       "previous_hits": 1,
       "current_hits": 1,
       "hit_change": 0,
       "is_new": false,
-      "star_growth_per_hour": 1.3552303421015481,
+      "star_growth_per_hour": 2.7711078687055526,
       "selection_reasons": [
         "top_star_growth"
       ]
@@ -147,14 +147,14 @@
     {
       "name": "crewAIInc/crewAI",
       "url": "https://github.com/crewAIInc/crewAI",
-      "previous_stars": 60132,
-      "current_stars": 60177,
-      "star_growth": 45,
+      "previous_stars": 60177,
+      "current_stars": 60221,
+      "star_growth": 44,
       "previous_hits": 1,
       "current_hits": 1,
       "hit_change": 0,
       "is_new": false,
-      "star_growth_per_hour": 1.9057926685803022,
+      "star_growth_per_hour": 1.819832033179766,
       "selection_reasons": [
         "top_star_growth"
       ]
