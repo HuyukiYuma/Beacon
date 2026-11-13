@@ -1,99 +1,23 @@
 {
   "theme": "AI Agent",
   "period": {
-    "previous": "2026-11-11T21:57:47",
-    "current": "2026-11-12T21:50:31",
-    "elapsed_seconds": 85964.0,
-    "elapsed_hours": 23.878888888888888
+    "previous": "2026-11-12T21:50:31",
+    "current": "2026-11-13T21:25:34",
+    "elapsed_seconds": 84903.0,
+    "elapsed_hours": 23.58416666666667
   },
   "candidates": [
     {
-      "name": "heygen-com/hyperframes",
-      "url": "https://github.com/heygen-com/hyperframes",
-      "previous_stars": 82834,
-      "current_stars": 83379,
-      "star_growth": 545,
+      "name": "firecrawl/firecrawl",
+      "url": "https://github.com/firecrawl/firecrawl",
+      "previous_stars": 201263,
+      "current_stars": 201556,
+      "star_growth": 293,
       "previous_hits": 1,
       "current_hits": 1,
       "hit_change": 0,
       "is_new": false,
-      "star_growth_per_hour": 22.823507514773627,
-      "selection_reasons": [
-        "top_star_growth"
-      ]
-    },
-    {
-      "name": "crewAIInc/crewAI",
-      "url": "https://github.com/crewAIInc/crewAI",
-      "previous_stars": 60782,
-      "current_stars": 60824,
-      "star_growth": 42,
-      "previous_hits": 1,
-      "current_hits": 1,
-      "hit_change": 0,
-      "is_new": false,
-      "star_growth_per_hour": 1.7588758084779677,
-      "selection_reasons": [
-        "top_star_growth"
-      ]
-    },
-    {
-      "name": "obra/superpowers",
-      "url": "https://github.com/obra/superpowers",
-      "previous_stars": 316256,
-      "current_stars": 316733,
-      "star_growth": 477,
-      "previous_hits": 2,
-      "current_hits": 2,
-      "hit_change": 0,
-      "is_new": false,
-      "star_growth_per_hour": 19.975803824856918,
-      "selection_reasons": [
-        "top_star_growth",
-        "multiple_keyword_matches"
-      ]
-    },
-    {
-      "name": "morluto/rea",
-      "url": "https://github.com/morluto/rea",
-      "previous_stars": 452523,
-      "current_stars": 455093,
-      "star_growth": 2570,
-      "previous_hits": 1,
-      "current_hits": 1,
-      "hit_change": 0,
-      "is_new": false,
-      "star_growth_per_hour": 107.62644828067563,
-      "selection_reasons": [
-        "top_star_growth"
-      ]
-    },
-    {
-      "name": "NousResearch/hermes-agent",
-      "url": "https://github.com/NousResearch/hermes-agent",
-      "previous_stars": 262721,
-      "current_stars": 262951,
-      "star_growth": 230,
-      "previous_hits": 1,
-      "current_hits": 1,
-      "hit_change": 0,
-      "is_new": false,
-      "star_growth_per_hour": 9.63193895118887,
-      "selection_reasons": [
-        "top_star_growth"
-      ]
-    },
-    {
-      "name": "Tencent/WeKnora",
-      "url": "https://github.com/Tencent/WeKnora",
-      "previous_stars": 37202,
-      "current_stars": 37314,
-      "star_growth": 112,
-      "previous_hits": 1,
-      "current_hits": 1,
-      "hit_change": 0,
-      "is_new": false,
-      "star_growth_per_hour": 4.69033548927458,
+      "star_growth_per_hour": 12.42358927246387,
       "selection_reasons": [
         "top_star_growth"
       ]
@@ -101,45 +25,30 @@
     {
       "name": "ruvnet/ruflo",
       "url": "https://github.com/ruvnet/ruflo",
-      "previous_stars": 81492,
-      "current_stars": 81568,
-      "star_growth": 76,
+      "previous_stars": 81568,
+      "current_stars": 81639,
+      "star_growth": 71,
       "previous_hits": 2,
       "current_hits": 2,
       "hit_change": 0,
       "is_new": false,
-      "star_growth_per_hour": 3.1827276534363222,
+      "star_growth_per_hour": 3.0104943288223027,
       "selection_reasons": [
         "top_star_growth",
         "multiple_keyword_matches"
       ]
     },
     {
-      "name": "DietrichGebert/ponytail",
-      "url": "https://github.com/DietrichGebert/ponytail",
-      "previous_stars": 189098,
-      "current_stars": 189740,
-      "star_growth": 642,
+      "name": "Tencent/WeKnora",
+      "url": "https://github.com/Tencent/WeKnora",
+      "previous_stars": 37314,
+      "current_stars": 37394,
+      "star_growth": 80,
       "previous_hits": 1,
       "current_hits": 1,
       "hit_change": 0,
       "is_new": false,
-      "star_growth_per_hour": 26.885673072448935,
-      "selection_reasons": [
-        "top_star_growth"
-      ]
-    },
-    {
-      "name": "firecrawl/firecrawl",
-      "url": "https://github.com/firecrawl/firecrawl",
-      "previous_stars": 200935,
-      "current_stars": 201263,
-      "star_growth": 328,
-      "previous_hits": 1,
-      "current_hits": 1,
-      "hit_change": 0,
-      "is_new": false,
-      "star_growth_per_hour": 13.735982504304127,
+      "star_growth_per_hour": 3.392106285996961,
       "selection_reasons": [
         "top_star_growth"
       ]
@@ -147,14 +56,105 @@
     {
       "name": "langchain-ai/langchain",
       "url": "https://github.com/langchain-ai/langchain",
-      "previous_stars": 149372,
-      "current_stars": 149415,
-      "star_growth": 43,
+      "previous_stars": 149415,
+      "current_stars": 149468,
+      "star_growth": 53,
       "previous_hits": 1,
       "current_hits": 1,
       "hit_change": 0,
       "is_new": false,
-      "star_growth_per_hour": 1.8007538039179192,
+      "star_growth_per_hour": 2.2472704144729865,
+      "selection_reasons": [
+        "top_star_growth"
+      ]
+    },
+    {
+      "name": "obra/superpowers",
+      "url": "https://github.com/obra/superpowers",
+      "previous_stars": 316733,
+      "current_stars": 317201,
+      "star_growth": 468,
+      "previous_hits": 2,
+      "current_hits": 2,
+      "hit_change": 0,
+      "is_new": false,
+      "star_growth_per_hour": 19.843821773082222,
+      "selection_reasons": [
+        "top_star_growth",
+        "multiple_keyword_matches"
+      ]
+    },
+    {
+      "name": "NousResearch/hermes-agent",
+      "url": "https://github.com/NousResearch/hermes-agent",
+      "previous_stars": 262951,
+      "current_stars": 263202,
+      "star_growth": 251,
+      "previous_hits": 1,
+      "current_hits": 1,
+      "hit_change": 0,
+      "is_new": false,
+      "star_growth_per_hour": 10.642733472315465,
+      "selection_reasons": [
+        "top_star_growth"
+      ]
+    },
+    {
+      "name": "morluto/rea",
+      "url": "https://github.com/morluto/rea",
+      "previous_stars": 455093,
+      "current_stars": 457440,
+      "star_growth": 2347,
+      "previous_hits": 1,
+      "current_hits": 1,
+      "hit_change": 0,
+      "is_new": false,
+      "star_growth_per_hour": 99.51591816543585,
+      "selection_reasons": [
+        "top_star_growth"
+      ]
+    },
+    {
+      "name": "crewAIInc/crewAI",
+      "url": "https://github.com/crewAIInc/crewAI",
+      "previous_stars": 60824,
+      "current_stars": 60862,
+      "star_growth": 38,
+      "previous_hits": 1,
+      "current_hits": 1,
+      "hit_change": 0,
+      "is_new": false,
+      "star_growth_per_hour": 1.6112504858485566,
+      "selection_reasons": [
+        "top_star_growth"
+      ]
+    },
+    {
+      "name": "heygen-com/hyperframes",
+      "url": "https://github.com/heygen-com/hyperframes",
+      "previous_stars": 83379,
+      "current_stars": 83895,
+      "star_growth": 516,
+      "previous_hits": 1,
+      "current_hits": 1,
+      "hit_change": 0,
+      "is_new": false,
+      "star_growth_per_hour": 21.8790855446804,
+      "selection_reasons": [
+        "top_star_growth"
+      ]
+    },
+    {
+      "name": "DietrichGebert/ponytail",
+      "url": "https://github.com/DietrichGebert/ponytail",
+      "previous_stars": 189740,
+      "current_stars": 190317,
+      "star_growth": 577,
+      "previous_hits": 1,
+      "current_hits": 1,
+      "hit_change": 0,
+      "is_new": false,
+      "star_growth_per_hour": 24.46556658775308,
       "selection_reasons": [
         "top_star_growth"
       ]
